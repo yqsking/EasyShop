@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyShop.Api</name>
+    </assembly>
+    <members>
+        <member name="T:EasyShop.Api.Controllers.CommonController">
+            <summary>
+            公共模块
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.CommonController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="webHostEnvironment"></param>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.CommonController.UploadImages(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            文件上传
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.CommonController.DownloadFileAsync(System.String)">
+            <summary>
+            下载文件接口
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EasyShop.Api.Controllers.UserController">
+            <summary>
+            用户模块
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.UserController.#ctor(MediatR.IMediator,EasyShop.Appliction.Queries.IUserQueries)">
+            <summary>
+            
+            </summary>
+            <param name="mediator"></param>
+            <param name="userQueries"></param>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.UserController.GetUser(System.String)">
+            <summary>
+            获取指定用户信息
+            </summary>
+            <param name="id">用户唯一id</param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.UserController.UserRegister(EasyShop.Appliction.Commands.User.RegisterUserCommand)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare">
+            <summary>
+            全局异常处理中间件
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare})">
+            <summary>
+            
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare.HandleExceptionAsync(Microsoft.AspNetCore.Http.HttpContext,System.Exception,System.String,System.String)">
+            <summary>
+            处理异常信息
+            </summary>
+        </member>
+        <member name="T:EasyShop.Api.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:EasyShop.Api.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:EasyShop.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>        
+        </member>
+    </members>
+</doc>

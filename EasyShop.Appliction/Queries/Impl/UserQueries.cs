@@ -1,0 +1,49 @@
+﻿using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using AutoMapper;
+using EasyShop.Appliction.DataTransferModel.User;
+using EasyShop.Appliction.ViewModels;
+using EasyShop.Appliction.ViewModels.User;
+using EasyShop.Dommain.Repositorys.User;
+
+namespace EasyShop.Appliction.Queries.Impl
+{
+    public class UserQueries : IUserQueries
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="mapper"></param>
+        public UserQueries(IUserRepository userRepository,IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<UserResponseDto> GetUser(string id)
+        {
+            var model = await  _userRepository.GetEntityAsync(id.Trim());
+            return _mapper.Map<UserResponseDto>(model);
+        }
+
+        public async Task<UserResponseDto> GetUser(GetUserRequestDto dto)
+        {
+            Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
+            var model = await _userRepository.GetEntityAsync(expression);
+            return _mapper.Map<UserResponseDto>(model);
+        }
+
+        public async Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto)
+        {
+            Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
+            var list = await _userRepository.GetEntityPageList(dto.PageIndex,dto.PageSize ,expression,item=>item.CreateTime);
+            throw new NotImplementedException();
+        }
+
+    }
+}

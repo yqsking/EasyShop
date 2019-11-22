@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyShop.Appliction</name>
+    </assembly>
+    <members>
+        <member name="T:EasyShop.Appliction.Commands.User.Handlers.RegisterUserCommandHandler">
+            <summary>
+            注册用户命令处理器
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Commands.User.Handlers.RegisterUserCommandHandler.#ctor(EasyShop.Dommain.Repositorys.User.IUserRepository,EasyShop.Dommain.Repositorys.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="userRepository"></param>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:EasyShop.Appliction.Commands.User.Handlers.RegisterUserCommandHandler.Handle(EasyShop.Appliction.Commands.User.RegisterUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EasyShop.Appliction.Commands.User.RegisterUserCommand">
+            <summary>
+            注册用户命令
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.Photo">
+            <summary>
+            用户头像
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.QQNumber">
+            <summary>
+            qq号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.WeCharNumber">
+            <summary>
+            微信号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.Email">
+            <summary>
+            电子邮箱
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto">
+            <summary>
+            分页查询搜索条件基类
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto.PageIndex">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto.PageSize">
+            <summary>
+            每页条数
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto">
+            <summary>
+            查询多个用户搜索条件
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.QQNumber">
+            <summary>
+            qq号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.WeCharNumber">
+            <summary>
+            微信号
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto">
+            <summary>
+            查询单个用户条件
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.QQNumber">
+            <summary>
+            qq号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.WeCharNumber">
+            <summary>
+            微信号
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.#ctor(EasyShop.Dommain.Repositorys.User.IUserRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="userRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:EasyShop.Appliction.Queries.IUserQueries">
+            <summary>
+            用户模块查询器
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUser(System.String)">
+            <summary>
+            根据唯一Id获取用户
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUser(EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto)">
+            <summary>
+            根据搜索条件获取单个用户
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+            <summary>
+            根据搜索条件分页获取用户
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.ApiResult`1">
+            <summary>
+            通用请求结果
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.ApiResult`1.Data">
+            <summary>
+            查询数据
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.BaseResponseDto">
+            <summary>
+            响应dto基类
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.BaseResponseDto.Id">
+            <summary>
+            唯一id
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.BaseResponseDto.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.BaseResponseDto.CreateTimeString">
+            <summary>
+            创建时间字符串
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.PageResult`1">
+            <summary>
+            通用分页查询返回结果
+            </summary>
+            <typeparam name="TResponseDto"></typeparam>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.PageResult`1.PageIndex">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.PageResult`1.PageSize">
+            <summary>
+            每页条数
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.PageResult`1.TotalPageIndex">
+            <summary>
+            总页码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.PageResult`1.TotalNumber">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.PageResult`1.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.RequestResult">
+            <summary>
+            请求信息
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.RequestResult.IsSuccess">
+            <summary>
+            请求状态
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.RequestResult.ErrorId">
+            <summary>
+            错误Id
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.RequestResult.Message">
+            <summary>
+            提示消息
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.User.UserResponseDto">
+            <summary>
+            用户基础信息
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.Photo">
+            <summary>
+            用户头像
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.QQNumber">
+            <summary>
+            qq号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.WeCharNumber">
+            <summary>
+            微信号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.Email">
+            <summary>
+            电子邮箱
+            </summary>
+        </member>
+    </members>
+</doc>
