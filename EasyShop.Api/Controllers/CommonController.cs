@@ -43,8 +43,8 @@ namespace EasyShop.Api.Controllers
             }
             if (file.Length > 0)
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var path = "/ResourcesFile";
+                var fileName = Guid.NewGuid().ToString("N") + Path.GetExtension(file.FileName);
+                var path = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources");
                 if (!Directory.Exists(path))//如果不存在就创建文件夹
                 {
                     Directory.CreateDirectory(path);//创建该文件夹　
@@ -55,7 +55,8 @@ namespace EasyShop.Api.Controllers
                     await file.CopyToAsync(stream);
                     stream.Flush();
                     stream.Dispose();
-                    return new JsonResult(url + @"/src/Images/" + fileName);
+                    string fileUrl = Path.Combine(url, path);
+                    return new JsonResult(fileUrl);
                 }
             }
             return new JsonResult("");
