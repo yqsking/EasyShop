@@ -5,9 +5,11 @@ using EasyShop.BasicImpl.DBContext;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
@@ -103,8 +105,15 @@ namespace EasyShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
+            var path = Configuration.GetValue<string>("ResourcesPath");
+            //指定允许访问的静态资源根目录
+            app.UseStaticFiles(
+                new StaticFileOptions()
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),path)),
+                    RequestPath = new PathString($"/{path}")
+                } );
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
             app.UseAuthorization();
             //启动Swagger

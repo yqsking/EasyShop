@@ -24,4 +24,8 @@
     <ProjectReference Include="..\EasyShop.DI\EasyShop.DI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>

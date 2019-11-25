@@ -9,11 +9,12 @@
             公共模块
             </summary>
         </member>
-        <member name="M:EasyShop.Api.Controllers.CommonController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:EasyShop.Api.Controllers.CommonController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             
             </summary>
             <param name="webHostEnvironment"></param>
+            <param name="configuration"></param>
         </member>
         <member name="M:EasyShop.Api.Controllers.CommonController.UploadImages(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>

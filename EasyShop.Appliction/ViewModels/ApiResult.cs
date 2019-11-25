@@ -3,7 +3,7 @@
     /// <summary>
     /// 通用请求结果
     /// </summary>
-    public  class ApiResult<TResponseDto>:RequestResult where TResponseDto:BaseResponseDto
+    public  class ApiResult<TResponseDto>:RequestResult 
     {
         /// <summary>
         /// 查询数据
