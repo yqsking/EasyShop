@@ -18,8 +18,4 @@
     <ProjectReference Include="..\EasyShop.Dommain\EasyShop.Dommain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="HistorySql\" />
-  </ItemGroup>
-
 </Project>
