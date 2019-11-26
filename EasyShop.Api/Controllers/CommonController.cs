@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using EasyShop.Api.Filters;
 using EasyShop.Appliction.ViewModels;
+using EasyShop.CommonFramework.Exception;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,7 @@ namespace EasyShop.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/commons")]
+    [TypeFilter(typeof(AnonymousAttribute))]
     public class CommonController : ControllerBase
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -96,7 +99,7 @@ namespace EasyShop.Api.Controllers
             }
             if(!System.IO.File.Exists(filePath))
             {
-                throw new Exception("当前文件路径不存在！");
+                throw new CustomException("抱歉，当前文件路径不存在！");
             }
             var stream = System.IO.File.OpenRead(filePath);
             var result = await Task.Run(() => File(stream, "application/octet-stream", Path.GetFileName(filePath)));

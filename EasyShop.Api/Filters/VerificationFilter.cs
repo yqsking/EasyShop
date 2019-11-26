@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 
-namespace EasyShop.Api.Filter
+namespace EasyShop.Api.Filters
 {
     /// <summary>
     /// dto参数验证过滤器
