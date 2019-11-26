@@ -9,6 +9,9 @@ using EasyShop.Dommain.Repositorys.User;
 
 namespace EasyShop.Appliction.Queries.Impl
 {
+    /// <summary>
+    /// 用户模块查询器
+    /// </summary>
     public class UserQueries : IUserQueries
     {
         private readonly IUserRepository _userRepository;
@@ -25,12 +28,22 @@ namespace EasyShop.Appliction.Queries.Impl
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<UserResponseDto> GetUser(string id)
         {
             var model = await  _userRepository.GetEntityAsync(id.Trim());
             return _mapper.Map<UserResponseDto>(model);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public async Task<UserResponseDto> GetUser(GetUserRequestDto dto)
         {
             Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
@@ -38,6 +51,11 @@ namespace EasyShop.Appliction.Queries.Impl
             return _mapper.Map<UserResponseDto>(model);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public async Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto)
         {
             Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;

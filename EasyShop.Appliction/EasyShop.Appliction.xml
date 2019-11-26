@@ -4,6 +4,16 @@
         <name>EasyShop.Appliction</name>
     </assembly>
     <members>
+        <member name="T:EasyShop.Appliction.AutoMapper.UserProfile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.AutoMapper.UserProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:EasyShop.Appliction.Commands.User.Handlers.RegisterUserCommandHandler">
             <summary>
             注册用户命令处理器
@@ -130,12 +140,38 @@
             微信号
             </summary>
         </member>
+        <member name="T:EasyShop.Appliction.Queries.Impl.UserQueries">
+            <summary>
+            用户模块查询器
+            </summary>
+        </member>
         <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.#ctor(EasyShop.Dommain.Repositorys.User.IUserRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
             <param name="userRepository"></param>
             <param name="mapper"></param>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto)">
+            <summary>
+            
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+            <summary>
+            
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
         </member>
         <member name="T:EasyShop.Appliction.Queries.IUserQueries">
             <summary>

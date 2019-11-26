@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using EasyShop.Api.Filter;
 using EasyShop.Appliction.Commands.User;
 using EasyShop.Appliction.Queries;
 using EasyShop.Appliction.ViewModels;
@@ -15,6 +16,7 @@ namespace EasyShop.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/users")]
+    [TypeFilter(typeof(VerificationFilter))]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
