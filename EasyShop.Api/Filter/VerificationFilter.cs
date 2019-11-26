@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+﻿using EasyShop.CommonFramework.Exception;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 
 namespace EasyShop.Api.Filter
@@ -29,7 +29,7 @@ namespace EasyShop.Api.Filter
                 var errorList = context.ModelState.SelectMany(item => item.Value.Errors.Select(args => args.ErrorMessage)).ToList();
                 if(errorList.Any())
                 {
-                    throw new Exception(errorList.FirstOrDefault());
+                    throw new CustomException(errorList.FirstOrDefault());
                 }
             }
         }

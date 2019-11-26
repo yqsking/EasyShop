@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using EasyShop.CommonFramework.Exception;
 using Newtonsoft.Json;
 
 namespace  EasyShop.CommonFramework.Expands
@@ -22,7 +23,7 @@ namespace  EasyShop.CommonFramework.Expands
         {
             if(string.IsNullOrWhiteSpace(str))
             {
-                throw new Exception("当前字符串值为空");
+                throw new CustomException("当前字符串值为空");
             }
             return JsonConvert.DeserializeObject<T>(str);
         }

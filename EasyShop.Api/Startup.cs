@@ -2,7 +2,6 @@ using AutoMapper;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,16 +51,14 @@ namespace EasyShop.Api
                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //设置时间格式
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-            });
+            })
+            .ConfigureApiBehaviorOptions(o => { o.SuppressModelStateInvalidFilter = true; });//启用dto模型验证
             //配置允许跨域访问 (PS:同时配置 AllowCredentials 和 AllowAnyOrigin 会冲突报错)
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddHttpClient();
 
             //依赖注入automapper
             services.AddAutoMapper(typeof(UserProfile).Assembly);
-
-            //依赖注入中介者
-            services.AddMediatR(typeof(IMediator));
 
             //依赖注入公用服务
             services.RegisterCommon();

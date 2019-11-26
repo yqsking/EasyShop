@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EasyShop.CommonFramework.Exception;
+using Microsoft.AspNetCore.Http;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using System;
 using System.Collections;
 using System.Data;
 using System.IO;
@@ -27,7 +27,7 @@ namespace EasyShop.CommonFramework.Helpers
             var fileExt = Path.GetExtension(file.FileName).ToLower();
             if (fileExt != ".xls" && fileExt != ".xlsx")
             {
-                throw new Exception("文件类型错误");
+                throw new CustomException("文件类型错误");
             }
             var stream = file.OpenReadStream();
             stream.Position = 0;

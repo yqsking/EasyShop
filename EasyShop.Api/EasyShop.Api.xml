@@ -97,6 +97,24 @@
             处理异常信息
             </summary>
         </member>
+        <member name="T:EasyShop.Api.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:EasyShop.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:EasyShop.Api.Startup">
             <summary>
             
