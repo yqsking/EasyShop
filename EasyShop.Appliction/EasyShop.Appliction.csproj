@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyShop.CommonFramework\EasyShop.CommonFramework.csproj" />
     <ProjectReference Include="..\EasyShop.Dommain\EasyShop.Dommain.csproj" />
   </ItemGroup>
 

@@ -59,6 +59,22 @@ namespace EasyShop.Appliction.Queries.Impl
         public async Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto)
         {
             Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
+            if(!string.IsNullOrWhiteSpace(dto.UserName))
+            {
+                expression = expression.And(item=>item.UserName.Contains(dto.UserName.Trim()));
+            }
+            if (!string.IsNullOrWhiteSpace(dto.Phone))
+            {
+                expression = expression.And(item => item.Phone.Contains(dto.Phone.Trim()));
+            }
+            if (!string.IsNullOrWhiteSpace(dto.QQNumber))
+            {
+                expression = expression.And(item => item.QQNumber.Contains(dto.QQNumber.Trim()));
+            }
+            if (!string.IsNullOrWhiteSpace(dto.WeCharNumber))
+            {
+                expression = expression.And(item => item.WeCharNumber.Contains(dto.WeCharNumber.Trim()));
+            }
             var list = await _userRepository.GetEntityPageList(dto.PageIndex,dto.PageSize ,expression,item=>item.CreateTime);
             throw new NotImplementedException();
         }
