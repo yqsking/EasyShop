@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EasyShop.CommonFramework.Const;
+using EasyShop.CommonFramework.Exception;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyShop.Dommain.Entitys.User
@@ -134,6 +136,44 @@ namespace EasyShop.Dommain.Entitys.User
         public void SetEmail(string email)
         {
             Email = email;
+        }
+
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        [MaxLength(50),Required]
+        public string UserType { get; private set; }
+
+        /// <summary>
+        /// 设置用户类型
+        /// </summary>
+        /// <param name="userType"></param>
+        public void SetUserType(string userType)
+        {
+            if(UserType==UserTypeConst.Manage)
+            {
+                throw new  CustomException("");
+            }
+            UserType = userType;
+        }
+
+        /// <summary>
+        /// 用户状态
+        /// </summary>
+        [MaxLength(50),Required]
+        public string UserState { get; private set; }
+
+        /// <summary>
+        /// 设置用户状态
+        /// </summary>
+        /// <param name="userState"></param>
+        public void SetUserState(string userState)
+        {
+            if(UserType==UserTypeConst.Manage)
+            {
+                throw new CustomException("");
+            }
+            UserState = userState;
         }
       
     }

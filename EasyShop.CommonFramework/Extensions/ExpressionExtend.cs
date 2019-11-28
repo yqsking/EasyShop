@@ -23,6 +23,32 @@
             return Expression.Lambda<Func<TEntity, bool>>(body, newParameter);
 
         }
+
+        /// <summary>
+        /// 当前置条件成立时，合并表达式(And)；前置条件不成立时，默认返回原表达式
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="leftExpression"></param>
+        /// <param name="condition"></param>
+        /// <param name="rightExpression"></param>
+        /// <returns></returns>
+        public static Expression<Func<TEntity, bool>> AndIf<TEntity>(this Expression<Func<TEntity, bool>> leftExpression,bool condition, Expression<Func<TEntity, bool>> rightExpression)
+        {
+            if(condition)
+            {
+                ParameterExpression newParameter = Expression.Parameter(typeof(TEntity), "parameter");
+                NewExpressionVisitor visitor = new NewExpressionVisitor(newParameter);
+                var left = visitor.Replace(leftExpression.Body);
+                var right = visitor.Replace(rightExpression.Body);
+                var body = Expression.And(left, right);
+                return Expression.Lambda<Func<TEntity, bool>>(body, newParameter);
+            }
+            else
+            {
+                return leftExpression;
+            }
+
+        }
         /// <summary>
         /// 合并表达式(Or)
         /// </summary>
@@ -41,6 +67,34 @@
             var body = Expression.Or(left, right);
             return Expression.Lambda<Func<TEntity, bool>>(body, newParameter);
         }
+
+
+        /// <summary>
+        /// 当前置条件成立时，合并表达式(Or)；前置条件不成立时，默认返回原表达式
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="leftExpression"></param>
+        /// <param name="condition"></param>
+        /// <param name="rightExpression"></param>
+        /// <returns></returns>
+        public static Expression<Func<TEntity, bool>> OrIf<TEntity>(this Expression<Func<TEntity, bool>> leftExpression,bool condition, Expression<Func<TEntity, bool>> rightExpression)
+        {
+            if(condition)
+            {
+                ParameterExpression newParameter = Expression.Parameter(typeof(TEntity), "parameter");
+                NewExpressionVisitor visitor = new NewExpressionVisitor(newParameter);
+
+                var left = visitor.Replace(leftExpression.Body);
+                var right = visitor.Replace(rightExpression.Body);
+                var body = Expression.Or(left, right);
+                return Expression.Lambda<Func<TEntity, bool>>(body, newParameter);
+            }
+            else
+            {
+                return leftExpression;
+            }
+        }
+
     }
 
 

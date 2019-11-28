@@ -154,21 +154,21 @@
         </member>
         <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(System.String)">
             <summary>
-            
+            根据唯一Id获取用户
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto)">
             <summary>
-            
+            根据搜索条件获取单个用户
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
             <summary>
-            
+            根据搜索条件分页获取用户
             </summary>
             <param name="dto"></param>
             <returns></returns>

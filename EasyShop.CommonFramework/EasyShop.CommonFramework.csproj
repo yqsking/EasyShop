@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Const\" />
   </ItemGroup>
 
 </Project>

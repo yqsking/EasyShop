@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using EasyShop.Api.Filter;
+using EasyShop.Api.Filters;
 using EasyShop.Appliction.Commands.User;
+using EasyShop.Appliction.DataTransferModel.User;
 using EasyShop.Appliction.Queries;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
@@ -50,6 +51,20 @@ namespace EasyShop.Api.Controllers
         }
 
         /// <summary>
+        /// 分页获取所有用户信息
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PageResult<UserResponseDto>))]
+        public async Task<IActionResult> GetUserPageList([FromQuery]GetUserPageListRequestDto dto)
+        {
+            var result = await _userQueries.GetUserPageList(dto);
+            return Ok(result);
+        }
+
+        /// <summary>
         /// 用户注册
         /// </summary>
         /// <param name="command"></param>
@@ -62,5 +77,7 @@ namespace EasyShop.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+      
     }
 }

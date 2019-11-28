@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,7 +30,7 @@ namespace EasyShop.Appliction.Queries.Impl
         }
 
         /// <summary>
-        /// 
+        /// 根据唯一Id获取用户
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -40,7 +41,7 @@ namespace EasyShop.Appliction.Queries.Impl
         }
 
         /// <summary>
-        /// 
+        /// 根据搜索条件获取单个用户
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -52,31 +53,26 @@ namespace EasyShop.Appliction.Queries.Impl
         }
 
         /// <summary>
-        /// 
+        /// 根据搜索条件分页获取用户
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         public async Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto)
         {
             Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
-            if(!string.IsNullOrWhiteSpace(dto.UserName))
+            expression= expression.AndIf(!string.IsNullOrWhiteSpace(dto.UserName), item => item.UserName.Contains(dto.UserName.Trim()))
+                      .AndIf(!string.IsNullOrWhiteSpace(dto.Phone),item=>item.Phone.Contains(dto.Phone.Trim()))
+                      .AndIf(!string.IsNullOrWhiteSpace(dto.QQNumber),item=>item.QQNumber.Contains(dto.QQNumber.Trim()))
+                      .AndIf(!string.IsNullOrWhiteSpace(dto.WeCharNumber),item=>item.WeCharNumber .Contains(dto.WeCharNumber.Trim()));
+            var result = await _userRepository.GetEntityPageList(dto.PageIndex,dto.PageSize ,expression,item=>item.CreateTime);
+            return new PageResult<UserResponseDto>
             {
-                expression = expression.And(item=>item.UserName.Contains(dto.UserName.Trim()));
-            }
-            if (!string.IsNullOrWhiteSpace(dto.Phone))
-            {
-                expression = expression.And(item => item.Phone.Contains(dto.Phone.Trim()));
-            }
-            if (!string.IsNullOrWhiteSpace(dto.QQNumber))
-            {
-                expression = expression.And(item => item.QQNumber.Contains(dto.QQNumber.Trim()));
-            }
-            if (!string.IsNullOrWhiteSpace(dto.WeCharNumber))
-            {
-                expression = expression.And(item => item.WeCharNumber.Contains(dto.WeCharNumber.Trim()));
-            }
-            var list = await _userRepository.GetEntityPageList(dto.PageIndex,dto.PageSize ,expression,item=>item.CreateTime);
-            throw new NotImplementedException();
+                PageIndex = result.PageIndex,
+                PageSize = result.PageSize,
+                TotalNumber = result.TotalNumber,
+                TotalPageIndex = result.TotalPageIndex,
+                Data =_mapper.Map<List<UserResponseDto>>(result.Data)
+            };
         }
 
     }

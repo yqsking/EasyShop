@@ -49,6 +49,13 @@
             <param name="id">用户唯一id</param>
             <returns></returns>
         </member>
+        <member name="M:EasyShop.Api.Controllers.UserController.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+            <summary>
+            分页获取所有用户信息
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:EasyShop.Api.Controllers.UserController.UserRegister(EasyShop.Appliction.Commands.User.RegisterUserCommand)">
             <summary>
             用户注册
@@ -56,18 +63,40 @@
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="T:EasyShop.Api.Filter.VerificationFilter">
+        <member name="T:EasyShop.Api.Filters.AnonymousAttribute">
             <summary>
-            dto参数验证过滤器
+            匿名登录过滤器
             </summary>
         </member>
-        <member name="M:EasyShop.Api.Filter.VerificationFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+        <member name="M:EasyShop.Api.Filters.AnonymousAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
             <summary>
             
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:EasyShop.Api.Filter.VerificationFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+        <member name="T:EasyShop.Api.Filters.AuthorizeFilter">
+            <summary>
+            权限认证过滤器
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Filters.AuthorizeFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            登录授权验证
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:EasyShop.Api.Filters.VerificationFilter">
+            <summary>
+            dto参数验证过滤器
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Filters.VerificationFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:EasyShop.Api.Filters.VerificationFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
             <summary>
             dto模型参数验证
             </summary>
