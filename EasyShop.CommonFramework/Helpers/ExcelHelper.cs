@@ -18,9 +18,9 @@ namespace EasyShop.CommonFramework.Helpers
     /// <summary>
     /// excel工具类
     /// </summary>
-    public  static class ExcelHelper
+    public static class ExcelHelper
     {
-     
+
         #region 导入
         /// <summary>
         /// 导入excel
@@ -41,12 +41,12 @@ namespace EasyShop.CommonFramework.Helpers
             if (fileExt == ".xls")
             {
                 HSSFWorkbook hssfwb = new HSSFWorkbook(stream);
-                sheet= hssfwb.GetSheetAt(sheetIndex);
+                sheet = hssfwb.GetSheetAt(sheetIndex);
             }
             else
             {
                 XSSFWorkbook hssfwb = new XSSFWorkbook(stream);
-                sheet= hssfwb.GetSheetAt(sheetIndex);
+                sheet = hssfwb.GetSheetAt(sheetIndex);
             }
             IEnumerator rows = sheet.GetRowEnumerator();
             DataTable dt = new DataTable { TableName = sheet.SheetName };
@@ -54,7 +54,7 @@ namespace EasyShop.CommonFramework.Helpers
             while (rows.MoveNext())
             {
                 IRow row = (IRow)rows.Current;
-                if ( row.GetCell(0) != null && row.GetCell(0).CellType != CellType.Blank)
+                if (row.GetCell(0) != null && row.GetCell(0).CellType != CellType.Blank)
                 {
 
                     flag = AddRow(row, dt, flag);
@@ -71,7 +71,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="fileExt"></param>
         /// <param name="sheetIndex"></param>
         /// <returns></returns>
-        public static DataTable ImportExcel(Stream stream,string fileExt, int sheetIndex = 0)
+        public static DataTable ImportExcel(Stream stream, string fileExt, int sheetIndex = 0)
         {
             ISheet sheet;
             stream.Position = 0;
@@ -117,11 +117,11 @@ namespace EasyShop.CommonFramework.Helpers
                 for (int j = 0; j < cellNum; j++)
                 {
                     ICell cell = row.GetCell(j);
-                    if(!string.IsNullOrWhiteSpace(cell.GetCellValue()))
+                    if (!string.IsNullOrWhiteSpace(cell.GetCellValue()))
                     {
                         dt.Columns.Add(cell.GetCellValue(), typeof(string));
                     }
-                  
+
                 }
                 return true;
             }
@@ -134,11 +134,11 @@ namespace EasyShop.CommonFramework.Helpers
                 }
                 else
                 {
-                    if(!string.IsNullOrWhiteSpace(cell.GetCellValue()))
+                    if (!string.IsNullOrWhiteSpace(cell.GetCellValue()))
                     {
                         dr[i] = cell.GetCellValue();
                     }
-                   
+
                 }
             }
             dt.Rows.Add(dr);
@@ -152,7 +152,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <returns></returns>
         private static string GetCellValue(this ICell cell)
         {
-            if (cell.CellType == CellType.Blank || cell.CellType == CellType.Formula|| cell.CellType == CellType.String)
+            if (cell.CellType == CellType.Blank || cell.CellType == CellType.Formula || cell.CellType == CellType.String)
             {
                 if (cell.CellType == CellType.Formula && cell.CachedFormulaResultType == CellType.Numeric)
                 {
@@ -179,11 +179,11 @@ namespace EasyShop.CommonFramework.Helpers
         /// <typeparam name="T"></typeparam>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static byte[] Export<T>(List<T> dataSource) where T:new()
+        public static byte[] Export<T>(List<T> dataSource) where T : new()
         {
             using (var memoryStream = new MemoryStream())
             {
-                IWorkbook workbook = new XSSFWorkbook();
+                HSSFWorkbook workbook = new HSSFWorkbook();
 
                 /*创建*/
                 ISheet sheet = workbook.CreateSheet("Sheet1");
@@ -236,7 +236,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="row"></param>
         /// <param name="excelColumnAttributes"></param>
         /// <param name="workbook"></param>
-        private static void CreateHeader(ISheet sheet, IRow row, List<ExcelColumnAttribute> excelColumnAttributes, IWorkbook workbook)
+        private static void CreateHeader(ISheet sheet, IRow row, List<ExcelColumnAttribute> excelColumnAttributes, HSSFWorkbook workbook)
         {
             var cellStyle = GetCellStyle(workbook);
             for (int i = 0; i < excelColumnAttributes.Count; i++)
@@ -253,7 +253,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// </summary>
         /// <param name="workbook"></param>
         /// <returns></returns>
-        private static ICellStyle GetCellStyle(IWorkbook workbook)
+        private static ICellStyle GetCellStyle(HSSFWorkbook workbook)
         {
             var style = workbook.CreateCellStyle();
             style.Alignment = HorizontalAlignment.Center;
@@ -279,7 +279,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="excelColumnAttributes"></param>
         /// <param name="dataSource"></param>
         /// <param name="workbook"></param>
-        private static void CreateDataRows<T>(ISheet sheet, List<ExcelColumnAttribute> excelColumnAttributes, List<T> dataSource, IWorkbook workbook)
+        private static void CreateDataRows<T>(ISheet sheet, List<ExcelColumnAttribute> excelColumnAttributes, List<T> dataSource, HSSFWorkbook workbook)
         {
             var cellStyle = GetCellStyle(workbook);
 
@@ -298,6 +298,11 @@ namespace EasyShop.CommonFramework.Helpers
 
                     var value = item.GetType().GetProperty(excelColumnAttributes[i].PropertyName).GetValue(item);
                     cell.SetCellValue(value.ToString());
+
+                    if(excelColumnAttributes[i].DataType== ExcelDataTypeConst.Photo)
+                    {
+                        AddPic(sheet,workbook,value.ToString(),cell.RowIndex,cell.ColumnIndex);
+                    }
                 }
                 rowIndex++;
             }
@@ -321,6 +326,8 @@ namespace EasyShop.CommonFramework.Helpers
             HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 48, 48, col, row, col + 1, row + 1);
             HSSFPicture pict = (HSSFPicture)patriarch.CreatePicture(anchor, picindex);
         }
+
         #endregion
     }
 }
+
