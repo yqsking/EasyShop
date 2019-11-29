@@ -13,6 +13,7 @@ namespace EasyShop.Appliction.AutoMapper
         public UserProfile()
         {
             CreateMap<Dommain.Entitys.User.UserEntity,ViewModels.User.UserResponseDto>();
+            CreateMap<Dommain.Entitys.User.UserEntity, ViewModels.User.ExportUserResponseDto>();
         }
     }
 }

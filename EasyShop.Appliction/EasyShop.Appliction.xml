@@ -75,67 +75,92 @@
             电子邮箱
             </summary>
         </member>
-        <member name="T:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto">
+        <member name="T:EasyShop.Appliction.DataTransferModels.BaseSearchRequestDto">
             <summary>
             分页查询搜索条件基类
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto.PageIndex">
+        <member name="P:EasyShop.Appliction.DataTransferModels.BaseSearchRequestDto.PageIndex">
             <summary>
             当前页码
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.BaseSearchRequestDto.PageSize">
+        <member name="P:EasyShop.Appliction.DataTransferModels.BaseSearchRequestDto.PageSize">
             <summary>
             每页条数
             </summary>
         </member>
-        <member name="T:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto">
+        <member name="T:EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto">
             <summary>
-            查询多个用户搜索条件
+            导出用户信息
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.UserName">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto.UserName">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.Phone">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto.Phone">
             <summary>
             手机号
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.QQNumber">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto.QQNumber">
             <summary>
             qq号
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto.WeCharNumber">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto.WeCharNumber">
             <summary>
             微信号
             </summary>
         </member>
-        <member name="T:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto">
+        <member name="T:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto">
             <summary>
-            查询单个用户条件
+            查询多个用户搜索条件
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.UserName">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto.UserName">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.Phone">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto.Phone">
             <summary>
             手机号
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.QQNumber">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto.QQNumber">
             <summary>
             qq号
             </summary>
         </member>
-        <member name="P:EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto.WeCharNumber">
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto.WeCharNumber">
+            <summary>
+            微信号
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto">
+            <summary>
+            查询单个用户条件
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto.QQNumber">
+            <summary>
+            qq号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto.WeCharNumber">
             <summary>
             微信号
             </summary>
@@ -159,16 +184,23 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto)">
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto)">
             <summary>
             根据搜索条件获取单个用户
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto)">
             <summary>
             根据搜索条件分页获取用户
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
+            <summary>
+            获取所有符合条件的导出用户
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -185,16 +217,23 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUser(EasyShop.Appliction.DataTransferModel.User.GetUserRequestDto)">
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUser(EasyShop.Appliction.DataTransferModels.User.GetUserRequestDto)">
             <summary>
             根据搜索条件获取单个用户
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto)">
             <summary>
             根据搜索条件分页获取用户
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
+            <summary>
+            获取所有符合条件的导出用户
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -278,6 +317,41 @@
         <member name="P:EasyShop.Appliction.ViewModels.RequestResult.Message">
             <summary>
             提示消息
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto">
+            <summary>
+            导出用户
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.Photo">
+            <summary>
+            用户头像
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.QQNumber">
+            <summary>
+            qq号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.WeCharNumber">
+            <summary>
+            微信号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.ExportUserResponseDto.Email">
+            <summary>
+            电子邮箱
             </summary>
         </member>
         <member name="T:EasyShop.Appliction.ViewModels.User.UserResponseDto">

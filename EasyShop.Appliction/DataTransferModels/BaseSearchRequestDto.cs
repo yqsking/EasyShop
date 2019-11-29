@@ -1,4 +1,4 @@
-﻿namespace EasyShop.Appliction.DataTransferModel
+﻿namespace EasyShop.Appliction.DataTransferModels
 {
     /// <summary>
     /// 分页查询搜索条件基类

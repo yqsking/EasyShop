@@ -1,11 +1,17 @@
-﻿using EasyShop.CommonFramework.Exception;
+﻿using EasyShop.CommonFramework.Attributes;
+using EasyShop.CommonFramework.Const;
+using EasyShop.CommonFramework.Exception;
 using Microsoft.AspNetCore.Http;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace EasyShop.CommonFramework.Helpers
 {
@@ -14,6 +20,7 @@ namespace EasyShop.CommonFramework.Helpers
     /// </summary>
     public  static class ExcelHelper
     {
+     
         #region 导入
         /// <summary>
         /// 导入excel
@@ -165,5 +172,155 @@ namespace EasyShop.CommonFramework.Helpers
         #endregion
 
 
+        #region 导出
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataSource"></param>
+        /// <returns></returns>
+        public static byte[] Export<T>(List<T> dataSource) where T:new()
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                IWorkbook workbook = new XSSFWorkbook();
+
+                /*创建*/
+                ISheet sheet = workbook.CreateSheet("Sheet1");
+
+                /*类特性*/
+                List<ExcelColumnAttribute> excelColumnAttributes = GetColumnAttributes<T>();
+
+                /*创建表头*/
+                IRow header_row = sheet.CreateRow(0);
+                //行高
+                header_row.Height = 500;
+                CreateHeader(sheet, header_row, excelColumnAttributes, workbook);
+
+                /*填充数据*/
+                CreateDataRows(sheet, excelColumnAttributes, dataSource, workbook);
+
+                workbook.Write(memoryStream);
+                workbook.Close();
+                return memoryStream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// 获取列特性
+        /// </summary>
+        /// <returns></returns>
+        public static List<ExcelColumnAttribute> GetColumnAttributes<T>()
+        {
+            List<ExcelColumnAttribute> excelColumnAttribute = new List<ExcelColumnAttribute>();
+            Type t = typeof(T);
+            PropertyInfo[] arryProperty = t.GetProperties();
+            if (arryProperty.Any())
+            {
+                foreach (PropertyInfo p in arryProperty)
+                {
+                    ExcelColumnAttribute attribute = p.GetCustomAttribute<ExcelColumnAttribute>();
+                    if (attribute != null)
+                    {
+                        excelColumnAttribute.Add(attribute.SetPropertyName(p.Name));
+                    }
+                }
+            }
+            return excelColumnAttribute.OrderBy(p => p.Sort).ToList();
+        }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="excelColumnAttributes"></param>
+        /// <param name="workbook"></param>
+        private static void CreateHeader(ISheet sheet, IRow row, List<ExcelColumnAttribute> excelColumnAttributes, IWorkbook workbook)
+        {
+            var cellStyle = GetCellStyle(workbook);
+            for (int i = 0; i < excelColumnAttributes.Count; i++)
+            {
+                var cell = row.CreateCell(i, CellType.String);
+                cell.CellStyle = cellStyle;
+                cell.SetCellValue(excelColumnAttributes[i].ColumnName);
+                sheet.SetColumnWidth(i, (int)((excelColumnAttributes[i].Width + 0.72) * 100));
+            }
+        }
+
+        /// <summary>
+        /// 单元格样式
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <returns></returns>
+        private static ICellStyle GetCellStyle(IWorkbook workbook)
+        {
+            var style = workbook.CreateCellStyle();
+            style.Alignment = HorizontalAlignment.Center;
+            style.VerticalAlignment = VerticalAlignment.Center;
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
+            style.BorderTop = BorderStyle.Thin;
+            style.WrapText = true;
+            IFont font = workbook.CreateFont();
+            //字体名称
+            font.FontName = "等线";
+            //字体POINTS
+            font.FontHeightInPoints = 10;
+            style.SetFont(font);
+            return style;
+        }
+
+        /// <summary>
+        /// 创建数据行
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="excelColumnAttributes"></param>
+        /// <param name="dataSource"></param>
+        /// <param name="workbook"></param>
+        private static void CreateDataRows<T>(ISheet sheet, List<ExcelColumnAttribute> excelColumnAttributes, List<T> dataSource, IWorkbook workbook)
+        {
+            var cellStyle = GetCellStyle(workbook);
+
+            var dateCellStyle = GetCellStyle(workbook);
+
+            IDataFormat dataFormat = workbook.CreateDataFormat();
+
+            var rowIndex = 1;
+            foreach (var item in dataSource)
+            {
+                var row = sheet.CreateRow(rowIndex);
+                for (int i = 0; i < excelColumnAttributes.Count; i++)
+                {
+                    var cell = row.CreateCell(i, CellType.String);
+                    cell.CellStyle = cellStyle;
+
+                    var value = item.GetType().GetProperty(excelColumnAttributes[i].PropertyName).GetValue(item);
+                    cell.SetCellValue(value.ToString());
+                }
+                rowIndex++;
+            }
+
+        }
+
+
+        /// <summary>
+        /// 封装方法，用于表格内渲染图片
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="workbook">工作簿</param>
+        /// <param name="fileurl">图片地址</param>
+        /// <param name="row">行</param>
+        /// <param name="col">列</param>
+        private static void AddPic(ISheet sheet, HSSFWorkbook workbook, string fileurl, int row, int col)
+        {
+            byte[] bytes = File.ReadAllBytes(fileurl);
+            int picindex = workbook.AddPicture(bytes, PictureType.JPEG);
+            HSSFPatriarch patriarch = (HSSFPatriarch)sheet.CreateDrawingPatriarch();
+            HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 48, 48, col, row, col + 1, row + 1);
+            HSSFPicture pict = (HSSFPicture)patriarch.CreatePicture(anchor, picindex);
+        }
+        #endregion
     }
 }

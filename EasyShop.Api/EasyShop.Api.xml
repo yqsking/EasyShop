@@ -49,9 +49,16 @@
             <param name="id">用户唯一id</param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Api.Controllers.UserController.GetUserPageList(EasyShop.Appliction.DataTransferModel.User.GetUserPageListRequestDto)">
+        <member name="M:EasyShop.Api.Controllers.UserController.GetUserPageList(EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto)">
             <summary>
             分页获取所有用户信息
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EasyShop.Api.Controllers.UserController.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
+            <summary>
+            导出符合条件的用户信息
             </summary>
             <param name="dto"></param>
             <returns></returns>

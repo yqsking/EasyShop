@@ -1,9 +1,9 @@
 ﻿namespace EasyShop.Appliction.DataTransferModels.User
 {
     /// <summary>
-    /// 查询单个用户条件
+    /// 导出用户信息
     /// </summary>
-    public  class GetUserRequestDto
+    public  class GetExportUserListRequestDto
     {
         /// <summary>
         /// 用户名

@@ -1,4 +1,4 @@
-﻿namespace EasyShop.Appliction.DataTransferModel.User
+﻿namespace EasyShop.Appliction.DataTransferModels.User
 {
     /// <summary>
     /// 查询多个用户搜索条件
