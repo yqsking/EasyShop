@@ -1,4 +1,5 @@
 using AutoMapper;
+using EasyShop.Api.Filters;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
@@ -86,6 +87,7 @@ namespace EasyShop.Api
                 var xmlPathAppliction = Path.Combine(basePath, "EasyShop.Appliction.xml");
                 options.IncludeXmlComments(xmlPathApi);
                 options.IncludeXmlComments(xmlPathAppliction);
+                options.SchemaFilter<SwaggerExcludeFilter>();
 
             });
 

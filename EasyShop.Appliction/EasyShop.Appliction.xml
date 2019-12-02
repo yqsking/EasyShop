@@ -35,6 +35,27 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:EasyShop.Appliction.Commands.User.Handlers.UpdateUserCommandHandler">
+            <summary>
+            更新用户基本资料命令
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Commands.User.Handlers.UpdateUserCommandHandler.#ctor(EasyShop.Dommain.Repositorys.User.IUserRepository,EasyShop.Dommain.Repositorys.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="userRepository"></param>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:EasyShop.Appliction.Commands.User.Handlers.UpdateUserCommandHandler.Handle(EasyShop.Appliction.Commands.User.UpdateUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            更新用户基本资料
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:EasyShop.Appliction.Commands.User.RegisterUserCommand">
             <summary>
             注册用户命令
@@ -71,6 +92,52 @@
             </summary>
         </member>
         <member name="P:EasyShop.Appliction.Commands.User.RegisterUserCommand.Email">
+            <summary>
+            电子邮箱
+            </summary>
+        </member>
+        <member name="T:EasyShop.Appliction.Commands.User.UpdateUserCommand">
+            <summary>
+            更新用户基本资料命令
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.Id">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Commands.User.UpdateUserCommand.SetId(System.String)">
+            <summary>
+            设置用户id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.Photo">
+            <summary>
+            用户头像
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.QQNumber">
+            <summary>
+            qq号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.WeCharNumber">
+            <summary>
+            微信号
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.Commands.User.UpdateUserCommand.Email">
             <summary>
             电子邮箱
             </summary>

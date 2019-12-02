@@ -96,6 +96,22 @@ namespace EasyShop.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// 更新用户基本资料
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResult<UserResponseDto>))]
+        public async Task<IActionResult> UpdateUser([FromRoute]string id,[FromBody]UpdateUserCommand command)
+        {
+            command.SetId(id);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
       
     }
 }
