@@ -12,6 +12,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace EasyShop.CommonFramework.Helpers
 {
@@ -320,11 +321,18 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="col">列</param>
         private static void AddPic(ISheet sheet, HSSFWorkbook workbook, string fileurl, int row, int col)
         {
+
+            if(fileurl.ToLower().Contains("http"))
+            {
+                var arry = fileurl.Split("//").LastOrDefault().Split("/").Skip(1).ToArray();
+                fileurl = string.Join("/", arry);
+            }
             byte[] bytes = File.ReadAllBytes(fileurl);
             int picindex = workbook.AddPicture(bytes, PictureType.JPEG);
             HSSFPatriarch patriarch = (HSSFPatriarch)sheet.CreateDrawingPatriarch();
-            HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 48, 48, col, row, col + 1, row + 1);
-            HSSFPicture pict = (HSSFPicture)patriarch.CreatePicture(anchor, picindex);
+            HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 0, col, row, col + 1, row + 1);
+            patriarch.CreatePicture(anchor, picindex);
+
         }
 
         #endregion
