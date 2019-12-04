@@ -42,7 +42,7 @@ namespace EasyShop.Dommain.Entitys.User
         /// <summary>
         /// 用户名
         /// </summary>
-        [MaxLength(50,ErrorMessage ="用户名长度超过上限（50字符）"),Required(ErrorMessage ="用户名不能为空")]
+        [MaxLength(50),Required]
         public string UserName { get; private set; }
 
         /// <summary>
