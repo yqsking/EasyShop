@@ -48,7 +48,6 @@ namespace EasyShop.Appliction.Commands.User
         /// 电子邮箱
         /// </summary>
         [MaxLength(50,ErrorMessage ="电子邮箱长度超过上限")]
-        [EmailAddress(ErrorMessage ="电子邮箱格式错误")]
         public string Email { get; set; }
     }
 }

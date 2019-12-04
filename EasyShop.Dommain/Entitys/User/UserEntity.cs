@@ -25,7 +25,8 @@ namespace EasyShop.Dommain.Entitys.User
         /// <param name="qqNumber">qq号码</param>
         /// <param name="weCharNumber">微信号</param>
         /// <param name="email">邮箱</param>
-        public UserEntity(string userName, string phone, string password, string photo,string qqNumber,string weCharNumber,string email)
+        /// <param name="userType">用户类型</param>
+        public UserEntity(string userName, string phone, string password, string photo,string qqNumber,string weCharNumber,string email,string userType)
         {
             UserName = userName;
             Phone = phone;
@@ -34,6 +35,8 @@ namespace EasyShop.Dommain.Entitys.User
             QQNumber = qqNumber;
             WeCharNumber = weCharNumber;
             Email = email;
+            UserType = userType;
+            UserState = UserStateConst.Normal;
         }
 
         /// <summary>

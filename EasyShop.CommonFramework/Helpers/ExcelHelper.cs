@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace EasyShop.CommonFramework.Helpers
 {
@@ -312,22 +312,28 @@ namespace EasyShop.CommonFramework.Helpers
 
 
         /// <summary>
-        /// 封装方法，用于表格内渲染图片
+        /// 表格内渲染图片
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="workbook">工作簿</param>
-        /// <param name="fileurl">图片地址</param>
+        /// <param name="fileurl">图片地址（只能是本地服务器地址）</param>
         /// <param name="row">行</param>
         /// <param name="col">列</param>
         private static void AddPic(ISheet sheet, HSSFWorkbook workbook, string fileurl, int row, int col)
         {
-
-            if(fileurl.ToLower().Contains("http"))
+            byte[] bytes = null;
+            //去掉域名和端口验证文件相对地址是否存在于当前服务器
+            string newFileUrl= string.Join("/", fileurl.Split("//").LastOrDefault().Split("/").Skip(1).ToArray());
+            if(File.Exists(newFileUrl))
             {
-                var arry = fileurl.Split("//").LastOrDefault().Split("/").Skip(1).ToArray();
-                fileurl = string.Join("/", arry);
+                //存在，代表当前文件是本地服务器文件
+                bytes = File.ReadAllBytes(newFileUrl);
             }
-            byte[] bytes = File.ReadAllBytes(fileurl);
+            else
+            {
+                //当前文件是其他服务器文件，需要下载到当前服务器
+                bytes = HttpHelper.DownloadFile(fileurl);
+            }
             int picindex = workbook.AddPicture(bytes, PictureType.JPEG);
             HSSFPatriarch patriarch = (HSSFPatriarch)sheet.CreateDrawingPatriarch();
             HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 0, col, row, col + 1, row + 1);
@@ -335,6 +341,7 @@ namespace EasyShop.CommonFramework.Helpers
 
         }
 
+       
         #endregion
     }
 }

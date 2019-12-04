@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
+using EasyShop.CommonFramework.Const;
 using EasyShop.Dommain.Repositorys;
 using EasyShop.Dommain.Repositorys.User;
 using MediatR;
@@ -44,7 +45,7 @@ namespace EasyShop.Appliction.Commands.User.Handlers
             {
                 return new ApiResult<UserResponseDto> { IsSuccess = false, Message = $"抱歉,手机号：{request.Phone.Trim()}已被注册！",Data=default };
             }
-            var model = new Dommain.Entitys.User.UserEntity(request.UserName.Trim(), request.Phone.Trim(), request.Password.Trim(), request.Photo.Trim(), request.QQNumber.Trim(), request.WeCharNumber.Trim(), request.Email.Trim());
+            var model = new Dommain.Entitys.User.UserEntity(request.UserName.Trim(), request.Phone.Trim(), request.Password.Trim(), request.Photo.Trim(), request.QQNumber.Trim(), request.WeCharNumber.Trim(), request.Email.Trim(),UserTypeConst.Shoppers);
             await _userRepository.AddEntityAsync(model);
             await _unitOfWork.CommitAsync();
             return new ApiResult<UserResponseDto> { IsSuccess = true, Message = "注册成功",Data=_mapper.Map<UserResponseDto>(model) };
