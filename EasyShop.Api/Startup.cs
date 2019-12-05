@@ -82,6 +82,29 @@ namespace EasyShop.Api
                     Title = "EasyShop API",
                     Version = "v1"
                 });
+                //添加JWT授权
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "在下框中输入请求头中需要添加Jwt授权Token：Bearer Token",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPathApi = Path.Combine(basePath, "EasyShop.Api.xml");
                 var xmlPathAppliction = Path.Combine(basePath, "EasyShop.Appliction.xml");
