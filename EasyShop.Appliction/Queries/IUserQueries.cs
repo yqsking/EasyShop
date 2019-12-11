@@ -1,7 +1,6 @@
 ﻿using EasyShop.Appliction.DataTransferModels.User;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EasyShop.Appliction.Queries
@@ -11,6 +10,13 @@ namespace EasyShop.Appliction.Queries
     /// </summary>
     public  interface IUserQueries
     {
+        /// <summary>
+        /// 根据手机号登录获取Token
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<ApiResult<string>> GetTokenByPhone(GetTokenByPhoneRequestDto dto);
+
         /// <summary>
         /// 根据唯一Id获取用户
         /// </summary>

@@ -182,6 +182,21 @@
             微信号
             </summary>
         </member>
+        <member name="T:EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto">
+            <summary>
+            根据手机号登录
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto.Phone">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
         <member name="T:EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto">
             <summary>
             查询多个用户搜索条件
@@ -244,6 +259,13 @@
             <param name="userRepository"></param>
             <param name="mapper"></param>
         </member>
+        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetTokenByPhone(EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto)">
+            <summary>
+            根据手机号登录获取Token
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetUser(System.String)">
             <summary>
             根据唯一Id获取用户
@@ -265,17 +287,17 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Appliction.Queries.Impl.UserQueries.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
-            <summary>
-            获取所有符合条件的导出用户
-            </summary>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
         <member name="T:EasyShop.Appliction.Queries.IUserQueries">
             <summary>
             用户模块查询器
             </summary>
+        </member>
+        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetTokenByPhone(EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto)">
+            <summary>
+            根据手机号登录获取Token
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
         </member>
         <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUser(System.String)">
             <summary>
@@ -294,13 +316,6 @@
         <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetUserPageList(EasyShop.Appliction.DataTransferModels.User.GetUserPageListRequestDto)">
             <summary>
             根据搜索条件分页获取用户
-            </summary>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EasyShop.Appliction.Queries.IUserQueries.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
-            <summary>
-            获取所有符合条件的导出用户
             </summary>
             <param name="dto"></param>
             <returns></returns>

@@ -1,4 +1,8 @@
-﻿using System.Net;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using EasyShop.Api.Filters;
 using EasyShop.Appliction.Commands.User;
@@ -8,7 +12,8 @@ using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EasyShop.Api.Controllers
 {
@@ -35,6 +40,7 @@ namespace EasyShop.Api.Controllers
             _userQueries = userQueries;
         }
 
+      
         /// <summary>
         /// 获取指定用户信息
         /// </summary>
@@ -63,6 +69,23 @@ namespace EasyShop.Api.Controllers
             var result = await _userQueries.GetUserPageList(dto);
             return Ok(result);
         }
+
+        /// <summary>
+        /// 根据手机号码登录获取Token
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("phoneToken")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResult<string>))]
+        public async Task<IActionResult> GetTokenByPhone([FromBody]GetTokenByPhoneRequestDto dto)
+        {
+            //从数据库验证用户名，密码 
+            var result = await _userQueries.GetTokenByPhone(dto);
+            return Ok(result);
+           
+        }
+
 
         /// <summary>
         /// 用户注册

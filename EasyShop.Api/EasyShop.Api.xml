@@ -56,9 +56,9 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:EasyShop.Api.Controllers.UserController.GetExportUserList(EasyShop.Appliction.DataTransferModels.User.GetExportUserListRequestDto)">
+        <member name="M:EasyShop.Api.Controllers.UserController.GetTokenByPhone(EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto)">
             <summary>
-            导出符合条件的用户信息
+            根据手机号码登录获取Token
             </summary>
             <param name="dto"></param>
             <returns></returns>

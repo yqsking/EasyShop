@@ -6,6 +6,7 @@ using AutoMapper;
 using EasyShop.Appliction.DataTransferModels.User;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
+using EasyShop.CommonFramework.Exception;
 using EasyShop.Dommain.Repositorys.User;
 
 namespace EasyShop.Appliction.Queries.Impl
@@ -27,6 +28,21 @@ namespace EasyShop.Appliction.Queries.Impl
         {
             _userRepository = userRepository;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// 根据手机号登录获取Token
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async  Task<ApiResult<string>> GetTokenByPhone(GetTokenByPhoneRequestDto dto)
+        {
+            var user=await  _userRepository.GetEntityAsync(item=>item.Phone==dto.Phone.Trim()&&item.Password==dto.Password);
+            if(user==null)
+            {
+                throw new CustomException("手机号码或密码错误！");
+            }
+            return new ApiResult<string> { IsSuccess=true,Message="登录成功！",Data="22333"};
         }
 
         /// <summary>

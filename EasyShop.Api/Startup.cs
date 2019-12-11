@@ -3,6 +3,7 @@ using EasyShop.Api.Filters;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.IO;
+using System.Text;
 
 namespace EasyShop.Api
 {
@@ -114,6 +118,40 @@ namespace EasyShop.Api
 
             });
 
+            //添加JWT授权
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    // The signing key must match!
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"])),
+
+                    // Validate the JWT Issuer (iss) claim
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["Authentication:JwtBearer:Issuer"],
+
+                    // Validate the JWT Audience (aud) claim
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["Authentication:JwtBearer:Audience"],
+
+                    // Validate the token expiry
+                    ValidateLifetime = true,
+
+                    // If you want to allow a certain amount of clock drift, set that here
+                    ClockSkew = TimeSpan.Zero
+
+                };
+            });
+
         }
 
         /// <summary>
@@ -137,6 +175,7 @@ namespace EasyShop.Api
                     RequestPath = new PathString($"/{path}")
                 } );
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
+            app.UseAuthentication();//认证中间件
             app.UseAuthorization();
             //启动Swagger
             app.UseSwagger();
