@@ -24,12 +24,12 @@ namespace EasyShop.CommonFramework.Helpers
 
         #region 导入
         /// <summary>
-        /// 导入excel
+        /// 导入excel,T中属性需要标注ExcelImportColumnAttribute特性
         /// </summary>
         /// <param name="file"></param>
         /// <param name="sheetIndex"></param>
         /// <returns></returns>
-        public static DataTable ImportExcel(IFormFile file, int sheetIndex = 0)
+        public static List<T> ImportExcel<T>(IFormFile file, int sheetIndex = 0) where T:new()
         {
             ISheet sheet;
             var fileExt = Path.GetExtension(file.FileName).ToLower();
@@ -62,7 +62,7 @@ namespace EasyShop.CommonFramework.Helpers
                 }
 
             }
-            return dt;
+            return dt.ToList<T>(); ;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="fileExt"></param>
         /// <param name="sheetIndex"></param>
         /// <returns></returns>
-        public static DataTable ImportExcel(Stream stream, string fileExt, int sheetIndex = 0)
+        public static List<T> ImportExcel<T>(Stream stream, string fileExt, int sheetIndex = 0) where T:new()
         {
             ISheet sheet;
             stream.Position = 0;
@@ -99,7 +99,7 @@ namespace EasyShop.CommonFramework.Helpers
                 }
 
             }
-            return dt;
+            return dt.ToList<T>();
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace EasyShop.CommonFramework.Helpers
                 ISheet sheet = workbook.CreateSheet("Sheet1");
 
                 /*类特性*/
-                List<ExcelColumnAttribute> excelColumnAttributes = GetColumnAttributes<T>();
+                List<ExcelExportColumnAttribute> excelColumnAttributes = GetColumnAttributes<T>();
 
                 /*创建表头*/
                 IRow header_row = sheet.CreateRow(0);
@@ -211,16 +211,16 @@ namespace EasyShop.CommonFramework.Helpers
         /// 获取列特性
         /// </summary>
         /// <returns></returns>
-        public static List<ExcelColumnAttribute> GetColumnAttributes<T>()
+        public static List<ExcelExportColumnAttribute> GetColumnAttributes<T>()
         {
-            List<ExcelColumnAttribute> excelColumnAttribute = new List<ExcelColumnAttribute>();
+            List<ExcelExportColumnAttribute> excelColumnAttribute = new List<ExcelExportColumnAttribute>();
             Type t = typeof(T);
             PropertyInfo[] arryProperty = t.GetProperties();
             if (arryProperty.Any())
             {
                 foreach (PropertyInfo p in arryProperty)
                 {
-                    ExcelColumnAttribute attribute = p.GetCustomAttribute<ExcelColumnAttribute>();
+                    ExcelExportColumnAttribute attribute = p.GetCustomAttribute<ExcelExportColumnAttribute>();
                     if (attribute != null)
                     {
                         excelColumnAttribute.Add(attribute.SetPropertyName(p.Name));
@@ -237,7 +237,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="row"></param>
         /// <param name="excelColumnAttributes"></param>
         /// <param name="workbook"></param>
-        private static void CreateHeader(ISheet sheet, IRow row, List<ExcelColumnAttribute> excelColumnAttributes, HSSFWorkbook workbook)
+        private static void CreateHeader(ISheet sheet, IRow row, List<ExcelExportColumnAttribute> excelColumnAttributes, HSSFWorkbook workbook)
         {
             var cellStyle = GetCellStyle(workbook);
             for (int i = 0; i < excelColumnAttributes.Count; i++)
@@ -280,7 +280,7 @@ namespace EasyShop.CommonFramework.Helpers
         /// <param name="excelColumnAttributes"></param>
         /// <param name="dataSource"></param>
         /// <param name="workbook"></param>
-        private static void CreateDataRows<T>(ISheet sheet, List<ExcelColumnAttribute> excelColumnAttributes, List<T> dataSource, HSSFWorkbook workbook)
+        private static void CreateDataRows<T>(ISheet sheet, List<ExcelExportColumnAttribute> excelColumnAttributes, List<T> dataSource, HSSFWorkbook workbook)
         {
             var cellStyle = GetCellStyle(workbook);
 

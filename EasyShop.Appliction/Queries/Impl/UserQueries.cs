@@ -76,20 +76,5 @@ namespace EasyShop.Appliction.Queries.Impl
         }
 
 
-        /// <summary>
-        /// 获取所有符合条件的导出用户
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        public async  Task<List<ExportUserResponseDto>> GetExportUserList(GetExportUserListRequestDto dto)
-        {
-            Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
-            expression = expression.AndIf(!string.IsNullOrWhiteSpace(dto.UserName), item => item.UserName.Contains(dto.UserName.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.Phone), item => item.Phone.Contains(dto.Phone.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.QQNumber), item => item.QQNumber.Contains(dto.QQNumber.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.WeCharNumber), item => item.WeCharNumber.Contains(dto.WeCharNumber.Trim()));
-            var list = await _userRepository.GetEntityAllListAsync(expression,item=>item.CreateTime);
-            return _mapper.Map<List<ExportUserResponseDto>>(list);
-        }
     }
 }

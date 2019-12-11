@@ -6,10 +6,10 @@ namespace EasyShop.CommonFramework.Attributes
     /// Excel导出特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
-    public  class ExcelColumnAttribute:Attribute
+    public  class ExcelExportColumnAttribute:Attribute
     {
         /// <summary>
-        /// 列名
+        /// Excel列名
         /// </summary>
         public string ColumnName { get; set; }
 
@@ -21,12 +21,7 @@ namespace EasyShop.CommonFramework.Attributes
         /// <summary>
         /// 默认列宽
         /// </summary>
-        public int Width { get; set; } = 100;
-
-        /// <summary>
-        /// 数据格式
-        /// </summary>
-        public string DataFormat { get; set; }
+        public int Width { get; set; } = 50;
 
         /// <summary>
         /// 序号
@@ -43,7 +38,7 @@ namespace EasyShop.CommonFramework.Attributes
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public ExcelColumnAttribute SetPropertyName(string propertyName)
+        public ExcelExportColumnAttribute SetPropertyName(string propertyName)
         {
             PropertyName = propertyName;
             return this;

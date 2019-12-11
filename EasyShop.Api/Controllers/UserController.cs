@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using EasyShop.Api.Filters;
 using EasyShop.Appliction.Commands.User;
@@ -7,7 +6,6 @@ using EasyShop.Appliction.DataTransferModels.User;
 using EasyShop.Appliction.Queries;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.Appliction.ViewModels.User;
-using EasyShop.CommonFramework.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,22 +62,6 @@ namespace EasyShop.Api.Controllers
         {
             var result = await _userQueries.GetUserPageList(dto);
             return Ok(result);
-        }
-
-        /// <summary>
-        /// 导出符合条件的用户信息
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("exprot")]
-        public async Task<IActionResult> GetExportUserList([FromQuery]GetExportUserListRequestDto dto)
-        {
-            var result = await _userQueries.GetExportUserList(dto);
-            byte[] buff = ExcelHelper.Export(result);
-            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-            return File(buff, "application/vnd.ms-excel", $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
-
         }
 
         /// <summary>

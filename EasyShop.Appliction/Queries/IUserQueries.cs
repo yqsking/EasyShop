@@ -30,11 +30,6 @@ namespace EasyShop.Appliction.Queries
         /// <returns></returns>
         Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto);
 
-        /// <summary>
-        /// 获取所有符合条件的导出用户
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        Task<List<ExportUserResponseDto>> GetExportUserList(GetExportUserListRequestDto dto);
+    
     }
 }
