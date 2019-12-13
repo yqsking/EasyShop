@@ -471,5 +471,15 @@
             电子邮箱
             </summary>
         </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.UserType">
+            <summary>
+            用户类型
+            </summary>
+        </member>
+        <member name="P:EasyShop.Appliction.ViewModels.User.UserResponseDto.UserState">
+            <summary>
+            用户状态
+            </summary>
+        </member>
     </members>
 </doc>

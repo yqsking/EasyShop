@@ -3,7 +3,6 @@ using EasyShop.Api.Filters;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,13 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 using System.IO;
-using System.Text;
 
 namespace EasyShop.Api
 {
@@ -61,6 +57,9 @@ namespace EasyShop.Api
             //配置允许跨域访问 (PS:同时配置 AllowCredentials 和 AllowAnyOrigin 会冲突报错)
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddHttpClient();
+
+            //添加JWT授权
+            services.RegisterJWT(Configuration);
 
             //依赖注入automapper
             services.AddAutoMapper(typeof(UserProfile).Assembly);
@@ -118,39 +117,7 @@ namespace EasyShop.Api
 
             });
 
-            //添加JWT授权
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    // The signing key must match!
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"])),
-
-                    // Validate the JWT Issuer (iss) claim
-                    ValidateIssuer = true,
-                    ValidIssuer = Configuration["Authentication:JwtBearer:Issuer"],
-
-                    // Validate the JWT Audience (aud) claim
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Authentication:JwtBearer:Audience"],
-
-                    // Validate the token expiry
-                    ValidateLifetime = true,
-
-                    // If you want to allow a certain amount of clock drift, set that here
-                    ClockSkew = TimeSpan.Zero
-
-                };
-            });
+          
 
         }
 
@@ -175,8 +142,9 @@ namespace EasyShop.Api
                     RequestPath = new PathString($"/{path}")
                 } );
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
-            app.UseAuthentication();//认证中间件
             app.UseAuthorization();
+            app.UseAuthentication();//认证中间件
+           
             //启动Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -187,7 +155,6 @@ namespace EasyShop.Api
             });
             //启动允许跨域访问
             app.UseCors("AllowAll");
-            app.UseHttpsRedirection();
 
             // 短路中间件，配置Controller路由
             app.UseEndpoints(endpoints =>

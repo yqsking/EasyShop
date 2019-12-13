@@ -35,14 +35,14 @@ namespace EasyShop.Appliction.Queries.Impl
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async  Task<ApiResult<string>> GetTokenByPhone(GetTokenByPhoneRequestDto dto)
+        public async  Task<ApiResult<UserResponseDto>> GetTokenByPhone(GetTokenByPhoneRequestDto dto)
         {
             var user=await  _userRepository.GetEntityAsync(item=>item.Phone==dto.Phone.Trim()&&item.Password==dto.Password);
             if(user==null)
             {
                 throw new CustomException("手机号码或密码错误！");
             }
-            return new ApiResult<string> { IsSuccess=true,Message="登录成功！",Data="22333"};
+            return new ApiResult<UserResponseDto> { IsSuccess=true,Message="登录成功！",Data=_mapper.Map<UserResponseDto>(user)};
         }
 
         /// <summary>

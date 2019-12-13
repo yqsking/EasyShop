@@ -15,7 +15,7 @@ namespace EasyShop.Appliction.Queries
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        Task<ApiResult<string>> GetTokenByPhone(GetTokenByPhoneRequestDto dto);
+        Task<ApiResult<UserResponseDto>> GetTokenByPhone(GetTokenByPhoneRequestDto dto);
 
         /// <summary>
         /// 根据唯一Id获取用户

@@ -33,6 +33,17 @@ namespace EasyShop.Appliction.ViewModels.User
         public string Email { get; set; }
 
 
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public string UserType { get;  set; }
+
+      
+        /// <summary>
+        /// 用户状态
+        /// </summary>
+        public string UserState { get;  set; }
+
 
     }
 }
