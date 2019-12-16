@@ -104,8 +104,6 @@ namespace EasyShop.Api
                         }
                     };
                 });
-            //////ÃÌº”JWT ⁄»®
-            //services.RegisterJWT(Configuration);
 
             //“¿¿µ◊¢»Îautomapper
             services.AddAutoMapper(typeof(UserProfile).Assembly);

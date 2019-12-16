@@ -15,6 +15,7 @@ namespace EasyShop.Api.Controllers
     /// <summary>
     /// 用户模块
     /// </summary>
+    [Authorize(Policy = "jwtRequirement")]
     [ApiController]
     [Route("api/users")]
     [TypeFilter(typeof(VerificationFilter))]
@@ -55,7 +56,6 @@ namespace EasyShop.Api.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet]
         [Route("")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PageResult<UserResponseDto>))]
