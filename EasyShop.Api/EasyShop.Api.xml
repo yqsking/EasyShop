@@ -149,6 +149,29 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="T:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler">
+            <summary>
+            授权处理程序
+            </summary>
+        </member>
+        <member name="P:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.Schemes">
+            <summary>
+            授权方式（cookie, bearer, oauth, openid）
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,EasyShop.Api.JWT.Requirements.JwtAuthorizationRequirement)">
+            <summary>
+            处理授权
+            </summary>
+            <param name="context"></param>
+            <param name="requirement"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EasyShop.Api.JWT.Requirements.JwtAuthorizationRequirement">
+            <summary>
+            Jwt授权策略
+            </summary>
+        </member>
         <member name="T:EasyShop.Api.MiddleWare.ExceptionHandlerMiddleWare">
             <summary>
             全局异常处理中间件
@@ -209,12 +232,12 @@
         </member>
         <member name="P:EasyShop.Api.Startup.Configuration">
             <summary>
-            
+            配置文件
             </summary>
         </member>
         <member name="M:EasyShop.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            This method gets called by the runtime. Use this method to add services to the container.
+            依赖注入服务
             </summary>
             <param name="services"></param>
         </member>

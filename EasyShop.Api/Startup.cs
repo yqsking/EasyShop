@@ -1,8 +1,11 @@
 using AutoMapper;
 using EasyShop.Api.Filters;
+using EasyShop.Api.JWT.Requirements;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
+using EasyShop.CommonFramework.Exception;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +15,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EasyShop.Api
 {
@@ -34,12 +41,12 @@ namespace EasyShop.Api
         }
 
         /// <summary>
-        /// 
+        /// 配置文件
         /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// 依赖注入服务
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -57,9 +64,48 @@ namespace EasyShop.Api
             //配置允许跨域访问 (PS:同时配置 AllowCredentials 和 AllowAnyOrigin 会冲突报错)
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddHttpClient();
-
-            //添加JWT授权
-            services.RegisterJWT(Configuration);
+            //自定义jwt授权策略
+            services.AddAuthorization(
+                options=>
+                { 
+                    options.AddPolicy("jwtRequirement", policy => policy.Requirements.Add(new JwtAuthorizationRequirement())); }
+                ).AddAuthentication(option=>
+                {
+                    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(option=>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["Authentication:JwtBearer:Issuer"],//检查令牌的颁发者
+                        ValidAudience = Configuration["Authentication:JwtBearer:Audience"],//检查令牌的有效访问者
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:JwtBearer:SecurityKey"])),
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateLifetime = true
+                    };
+                    option.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            //Token expired
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("Token-Expired", "true");
+                            }
+                            return Task.CompletedTask;
+                        },
+                        //此处为权限验证失败后触发的事件
+                        OnChallenge = context =>
+                        {
+                            //此处代码为终止.Net Core默认的返回类型和数据结果
+                            context.HandleResponse();
+                            throw new CustomException("抱歉，当前账户登录授权失败！");
+                        }
+                    };
+                });
+            //////添加JWT授权
+            //services.RegisterJWT(Configuration);
 
             //依赖注入automapper
             services.AddAutoMapper(typeof(UserProfile).Assembly);
@@ -132,16 +178,22 @@ namespace EasyShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
             app.UseRouting();
-            var path = Configuration.GetValue<string>("ResourcesPath");
             //指定允许访问的静态资源根目录
+            var path = Configuration.GetValue<string>("ResourcesPath");
             app.UseStaticFiles(
                 new StaticFileOptions()
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),path)),
                     RequestPath = new PathString($"/{path}")
                 } );
+            //全局异常处理
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
+
             app.UseAuthorization();
             app.UseAuthentication();//认证中间件
            
