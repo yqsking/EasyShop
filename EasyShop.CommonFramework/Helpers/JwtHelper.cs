@@ -42,8 +42,8 @@ namespace EasyShop.CommonFramework.Helpers
               claims: claims,
               signingCredentials: creds
               );
-
-            return  new JwtSecurityTokenHandler().WriteToken(jwt);
+            string token = "Bearer" + " " + new JwtSecurityTokenHandler().WriteToken(jwt);
+            return  token;
 
 
         }

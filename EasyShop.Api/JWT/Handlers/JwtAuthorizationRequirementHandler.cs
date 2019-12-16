@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,7 +18,16 @@ namespace EasyShop.Api.JWT.Handlers
         /// <summary>
         /// 授权方式（cookie, bearer, oauth, openid）
         /// </summary>
-        public IAuthenticationSchemeProvider Schemes { get; set; }
+        private readonly IAuthenticationSchemeProvider _provider;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="provider"></param>
+        public JwtAuthorizationRequirementHandler(IAuthenticationSchemeProvider provider)
+        {
+            _provider = provider;
+        }
 
         /// <summary>
         /// 处理授权
@@ -30,7 +40,7 @@ namespace EasyShop.Api.JWT.Handlers
             var httpContext = (context.Resource as AuthorizationFilterContext).HttpContext;
 
             //获取授权方式
-            var defaultAuthenticate = await Schemes.GetDefaultAuthenticateSchemeAsync();
+            var defaultAuthenticate = await _provider.GetDefaultAuthenticateSchemeAsync();
             if (defaultAuthenticate != null)
             {
                 //验证签发的用户信息
@@ -39,8 +49,10 @@ namespace EasyShop.Api.JWT.Handlers
                 {
                   
                     httpContext.User = result.Principal;
+                    string exp = httpContext.User.Claims.SingleOrDefault(item => item.Type == JwtRegisteredClaimNames.Exp).Value;//Unix时间戳
+                    var expDateTime= DateTime.SpecifyKind(new DateTime(1970, 1, 1), DateTimeKind.Utc).AddSeconds(exp.ToInt()).ToLocalTime();
                     //判断是否过期
-                    if (DateTime.Parse(httpContext.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration).Value) >= DateTime.UtcNow)
+                    if (expDateTime >= DateTime.Now)
                     {
                         context.Succeed(requirement);
                     }

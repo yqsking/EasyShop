@@ -1,14 +1,17 @@
 using AutoMapper;
 using EasyShop.Api.Filters;
+using EasyShop.Api.JWT.Handlers;
 using EasyShop.Api.JWT.Requirements;
 using EasyShop.Api.MiddleWare;
 using EasyShop.Appliction.AutoMapper;
 using EasyShop.BasicImpl.DBContext;
 using EasyShop.CommonFramework.Exception;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +54,8 @@ namespace EasyShop.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers(options=>options.Filters.Add(new AuthorizeFilter("jwtRequirement")))//全局注册授权过滤器
+                    .AddNewtonsoftJson(options =>
             {
                 //忽略循环引用
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -86,15 +90,6 @@ namespace EasyShop.Api
                     };
                     option.Events = new JwtBearerEvents
                     {
-                        OnAuthenticationFailed = context =>
-                        {
-                            //Token expired
-                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                            {
-                                context.Response.Headers.Add("Token-Expired", "true");
-                            }
-                            return Task.CompletedTask;
-                        },
                         //此处为权限验证失败后触发的事件
                         OnChallenge = context =>
                         {
@@ -104,6 +99,8 @@ namespace EasyShop.Api
                         }
                     };
                 });
+            //依赖注入策略处理器
+            services.AddScoped<IAuthorizationHandler, JwtAuthorizationRequirementHandler>();
 
             //依赖注入automapper
             services.AddAutoMapper(typeof(UserProfile).Assembly);
@@ -160,9 +157,6 @@ namespace EasyShop.Api
                 options.SchemaFilter<SwaggerExcludeFilter>();
 
             });
-
-          
-
         }
 
         /// <summary>

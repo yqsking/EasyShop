@@ -76,10 +76,10 @@ namespace EasyShop.Appliction.Queries.Impl
         public async Task<PageResult<UserResponseDto>> GetUserPageList(GetUserPageListRequestDto dto)
         {
             Expression<Func<Dommain.Entitys.User.UserEntity, bool>> expression = item => true;
-            expression= expression.AndIf(!string.IsNullOrWhiteSpace(dto.UserName), item => item.UserName.Contains(dto.UserName.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.Phone),item=>item.Phone.Contains(dto.Phone.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.QQNumber),item=>item.QQNumber.Contains(dto.QQNumber.Trim()))
-                      .AndIf(!string.IsNullOrWhiteSpace(dto.WeCharNumber),item=>item.WeCharNumber .Contains(dto.WeCharNumber.Trim()));
+            expression= expression.AndIf(!dto.UserName.IsNull(), item => item.UserName.Contains(dto.UserName.Trim()))
+                      .AndIf(!dto.Phone.IsNull(),item=>item.Phone.Contains(dto.Phone.Trim()))
+                      .AndIf(!dto.QQNumber.IsNull(),item=>item.QQNumber.Contains(dto.QQNumber.Trim()))
+                      .AndIf(!dto.WeCharNumber.IsNull(),item=>item.WeCharNumber .Contains(dto.WeCharNumber.Trim()));
             var result = await _userRepository.GetEntityPageList(dto.PageIndex,dto.PageSize ,expression,item=>item.CreateTime);
             return new PageResult<UserResponseDto>
             {

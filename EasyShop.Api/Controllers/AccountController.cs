@@ -7,12 +7,15 @@ using EasyShop.Appliction.DataTransferModels.User;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using EasyShop.CommonFramework.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyShop.Api.Controllers
 {
     /// <summary>
     /// 授权模块
     /// </summary>
+    [AllowAnonymous]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly IUserQueries _userQueries;

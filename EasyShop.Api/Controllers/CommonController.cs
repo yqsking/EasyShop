@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EasyShop.Api.Filters;
 using EasyShop.Appliction.ViewModels;
 using EasyShop.CommonFramework.Exception;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace EasyShop.Api.Controllers
     /// <summary>
     /// 公共模块
     /// </summary>
+    [AllowAnonymous]
     [ApiController]
-    [Route("api/commons")]
-    [TypeFilter(typeof(AnonymousAttribute))]
+    [Route("api/common")]
     public class CommonController : ControllerBase
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

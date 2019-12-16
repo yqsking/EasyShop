@@ -15,9 +15,9 @@ namespace EasyShop.Api.Controllers
     /// <summary>
     /// 用户模块
     /// </summary>
-    [Authorize(Policy = "jwtRequirement")]
+    //[Authorize(Policy = "jwtRequirement")]
     [ApiController]
-    [Route("api/users")]
+    [Route("api/user")]
     [TypeFilter(typeof(VerificationFilter))]
     public class UserController : ControllerBase
     {
@@ -57,7 +57,7 @@ namespace EasyShop.Api.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("")]
+        [Route("allUser")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PageResult<UserResponseDto>))]
         public async Task<IActionResult> GetUserPageList([FromQuery]GetUserPageListRequestDto dto)
         {

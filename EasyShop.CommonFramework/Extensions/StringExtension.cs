@@ -39,5 +39,18 @@ namespace System
         {
             return JsonConvert.DeserializeObject<List<T>>(str);
         }
+
+       
+        /// <summary>
+        /// 将string转Int
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static int ToInt(this string str)
+        {
+            return Convert.ToInt32(str);
+        }
+
+        
     }
 }

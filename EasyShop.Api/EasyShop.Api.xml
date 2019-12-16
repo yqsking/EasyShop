@@ -90,28 +90,6 @@
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="T:EasyShop.Api.Filters.AnonymousAttribute">
-            <summary>
-            匿名登录过滤器
-            </summary>
-        </member>
-        <member name="M:EasyShop.Api.Filters.AnonymousAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="T:EasyShop.Api.Filters.AuthorizeFilter">
-            <summary>
-            权限认证过滤器
-            </summary>
-        </member>
-        <member name="M:EasyShop.Api.Filters.AuthorizeFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <summary>
-            登录授权验证
-            </summary>
-            <param name="context"></param>
-        </member>
         <member name="T:EasyShop.Api.Filters.SwaggerExcludeFilter">
              <summary>
             配置请求命令忽略参数
@@ -154,10 +132,16 @@
             授权处理程序
             </summary>
         </member>
-        <member name="P:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.Schemes">
+        <member name="F:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler._provider">
             <summary>
             授权方式（cookie, bearer, oauth, openid）
             </summary>
+        </member>
+        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider)">
+            <summary>
+            
+            </summary>
+            <param name="provider"></param>
         </member>
         <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,EasyShop.Api.JWT.Requirements.JwtAuthorizationRequirement)">
             <summary>

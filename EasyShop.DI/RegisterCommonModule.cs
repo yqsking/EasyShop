@@ -18,8 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             collection.AddScoped(typeof(DbContext),typeof(EasyShopDBContext));
             collection.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
-
         }
 
-       }
+    }
 }
