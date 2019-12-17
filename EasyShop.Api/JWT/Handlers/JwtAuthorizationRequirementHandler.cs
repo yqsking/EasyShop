@@ -1,5 +1,4 @@
 ﻿using EasyShop.Api.JWT.Requirements;
-using EasyShop.CommonFramework.Extensions;
 using EasyShop.CommonFramework.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

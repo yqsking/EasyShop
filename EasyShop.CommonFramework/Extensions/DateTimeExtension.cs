@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EasyShop.CommonFramework.Extensions
+﻿namespace System
 {
     public  static class DateTimeExtension
     {

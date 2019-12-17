@@ -67,11 +67,21 @@ namespace EasyShop.CommonFramework.Helpers
             return CreateToken(claims,creds);
         }
 
-
+        /// <summary>
+        /// 强制Token过期
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="claims"></param>
+        /// <returns></returns>
         public static string OutTimeTokenExpTime(IConfiguration configuration,List<Claim> claims)
         {
-            var exp= claims.FirstOrDefault(item => item.Type == JwtRegisteredClaimNames.Exp).Value;
-            return string.Empty;
+            var oldExpTime= claims.FirstOrDefault(item => item.Type == JwtRegisteredClaimNames.Exp).Value.ToInt().ToDateTime();
+            var expClaim = new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(oldExpTime.AddDays(-1)).ToUnixTimeSeconds()}");//令牌过期时间
+            claims.RemoveAll(item => item.Type == JwtRegisteredClaimNames.Exp);//移除token原来的过期时间有效载荷
+            claims.Add(expClaim);
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Authentication:JwtBearer:SecurityKey"]));//秘钥
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            return CreateToken(claims, creds);
         }
 
 
