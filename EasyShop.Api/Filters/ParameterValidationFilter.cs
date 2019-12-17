@@ -7,7 +7,7 @@ namespace EasyShop.Api.Filters
     /// <summary>
     /// dto参数验证过滤器
     /// </summary>
-    public class VerificationFilter : IActionFilter
+    public class ParameterValidationFilter : IActionFilter
     {
         /// <summary>
         /// 

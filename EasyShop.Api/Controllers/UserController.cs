@@ -15,10 +15,7 @@ namespace EasyShop.Api.Controllers
     /// <summary>
     /// 用户模块
     /// </summary>
-    //[Authorize(Policy = "jwtRequirement")]
-    [ApiController]
     [Route("api/user")]
-    [TypeFilter(typeof(VerificationFilter))]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -41,6 +38,7 @@ namespace EasyShop.Api.Controllers
         /// </summary>
         /// <param name="id">用户唯一id</param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(UserResponseDto))]

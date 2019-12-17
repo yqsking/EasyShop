@@ -1,11 +1,13 @@
 ﻿using EasyShop.Api.JWT.Requirements;
+using EasyShop.CommonFramework.Extensions;
+using EasyShop.CommonFramework.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EasyShop.Api.JWT.Handlers
@@ -20,13 +22,16 @@ namespace EasyShop.Api.JWT.Handlers
         /// </summary>
         private readonly IAuthenticationSchemeProvider _provider;
 
+        private readonly IConfiguration _configuration;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
-        public JwtAuthorizationRequirementHandler(IAuthenticationSchemeProvider provider)
+        public JwtAuthorizationRequirementHandler(IAuthenticationSchemeProvider provider,IConfiguration configuration)
         {
             _provider = provider;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -38,7 +43,6 @@ namespace EasyShop.Api.JWT.Handlers
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, JwtAuthorizationRequirement requirement)
         {
             var httpContext = (context.Resource as AuthorizationFilterContext).HttpContext;
-
             //获取授权方式
             var defaultAuthenticate = await _provider.GetDefaultAuthenticateSchemeAsync();
             if (defaultAuthenticate != null)
@@ -50,15 +54,17 @@ namespace EasyShop.Api.JWT.Handlers
                   
                     httpContext.User = result.Principal;
                     string exp = httpContext.User.Claims.SingleOrDefault(item => item.Type == JwtRegisteredClaimNames.Exp).Value;//Unix时间戳
-                    var expDateTime= DateTime.SpecifyKind(new DateTime(1970, 1, 1), DateTimeKind.Utc).AddSeconds(exp.ToInt()).ToLocalTime();
+                    var expDateTime = exp.ToInt().ToDateTime();
                     //判断是否过期
                     if (expDateTime >= DateTime.Now)
                     {
                         context.Succeed(requirement);
+                        string newToken= JwtHelper.RefreshTokenExpTime(_configuration,result.Principal.Claims.ToList());
+                        //在Response中返回最新jwt token
+                        httpContext.Response.Headers.Add("Authorization", newToken);
                     }
                     else
                     {
-                       // await httpContext.Response.WriteAsync(JsonHelper.ObjectToJSON(BaseResponse.CreateForbidden()));
                         context.Fail();
                     }
                     return;

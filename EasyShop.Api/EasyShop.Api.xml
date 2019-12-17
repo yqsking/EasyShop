@@ -90,6 +90,23 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="T:EasyShop.Api.Filters.ParameterValidationFilter">
+            <summary>
+            dto参数验证过滤器
+            </summary>
+        </member>
+        <member name="M:EasyShop.Api.Filters.ParameterValidationFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:EasyShop.Api.Filters.ParameterValidationFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            dto模型参数验证
+            </summary>
+            <param name="context"></param>
+        </member>
         <member name="T:EasyShop.Api.Filters.SwaggerExcludeFilter">
              <summary>
             配置请求命令忽略参数
@@ -110,23 +127,6 @@
             通过lambdaExpression获取属性PropertyInfo
             </summary>
         </member>
-        <member name="T:EasyShop.Api.Filters.VerificationFilter">
-            <summary>
-            dto参数验证过滤器
-            </summary>
-        </member>
-        <member name="M:EasyShop.Api.Filters.VerificationFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:EasyShop.Api.Filters.VerificationFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <summary>
-            dto模型参数验证
-            </summary>
-            <param name="context"></param>
-        </member>
         <member name="T:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler">
             <summary>
             授权处理程序
@@ -137,7 +137,7 @@
             授权方式（cookie, bearer, oauth, openid）
             </summary>
         </member>
-        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider)">
+        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             
             </summary>

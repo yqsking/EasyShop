@@ -54,8 +54,12 @@ namespace EasyShop.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options=>options.Filters.Add(new AuthorizeFilter("jwtRequirement")))//全局注册授权过滤器
-                    .AddNewtonsoftJson(options =>
+            services.AddControllers(options =>
+            {
+                //全局注册授权过滤器
+                options.Filters.Add(new AuthorizeFilter("jwtRequirement"));
+                options.Filters.Add(new ParameterValidationFilter());
+            }).AddNewtonsoftJson(options =>
             {
                 //忽略循环引用
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -70,15 +74,16 @@ namespace EasyShop.Api
             services.AddHttpClient();
             //自定义jwt授权策略
             services.AddAuthorization(
-                options=>
-                { 
-                    options.AddPolicy("jwtRequirement", policy => policy.Requirements.Add(new JwtAuthorizationRequirement())); }
-                ).AddAuthentication(option=>
+                options =>
+                {
+                    options.AddPolicy("jwtRequirement", policy => policy.Requirements.Add(new JwtAuthorizationRequirement()));
+                }
+                ).AddAuthentication(option =>
                 {
                     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddJwtBearer(option=>
+                }).AddJwtBearer(option =>
                 {
                     option.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -180,15 +185,15 @@ namespace EasyShop.Api
             app.UseStaticFiles(
                 new StaticFileOptions()
                 {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),path)),
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), path)),
                     RequestPath = new PathString($"/{path}")
-                } );
+                });
             //全局异常处理
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
 
             app.UseAuthorization();
             app.UseAuthentication();//认证中间件
-           
+
             //启动Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>

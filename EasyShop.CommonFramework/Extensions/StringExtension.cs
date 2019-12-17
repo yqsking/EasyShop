@@ -51,6 +51,5 @@ namespace System
             return Convert.ToInt32(str);
         }
 
-        
     }
 }
