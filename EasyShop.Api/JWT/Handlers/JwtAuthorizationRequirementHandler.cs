@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,22 +49,12 @@ namespace EasyShop.Api.JWT.Handlers
                 var result = await httpContext.AuthenticateAsync(defaultAuthenticate.Name);
                 if (result.Succeeded)
                 {
-                  
+        
                     httpContext.User = result.Principal;
-                    string exp = httpContext.User.Claims.SingleOrDefault(item => item.Type == JwtRegisteredClaimNames.Exp).Value;//Unix时间戳
-                    var expDateTime = exp.ToInt().ToDateTime();
-                    //判断是否过期
-                    if (expDateTime >= DateTime.Now)
-                    {
-                        context.Succeed(requirement);
-                        string newToken= JwtHelper.RefreshTokenExpTime(_configuration,result.Principal.Claims.ToList());
-                        //在Response中返回最新jwt token
-                        httpContext.Response.Headers.Add("Authorization", newToken);
-                    }
-                    else
-                    {
-                        context.Fail();
-                    }
+                    context.Succeed(requirement);
+                    string newToken = JwtHelper.RefreshTokenExpTime(_configuration, result.Principal.Claims.ToList());
+                    //Response返回最新jwt token
+                    httpContext.Response.Headers.Add("Authorization",newToken);
                     return;
                 }
             }

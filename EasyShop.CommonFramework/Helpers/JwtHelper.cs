@@ -28,9 +28,9 @@ namespace EasyShop.CommonFramework.Helpers
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString("N")),//令牌编号
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString()),//令牌颁发时间
-                new Claim(JwtRegisteredClaimNames.Nbf, DateTime.Now.ToUniversalTime().ToString()),//令牌生效时间
-                new Claim(JwtRegisteredClaimNames.Exp, DateTime.Now.AddMinutes(outTimeMinute).ToUniversalTime().ToString()),//令牌过期时间
+                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUnixTimeSeconds().ToString()),//令牌颁发时间
+                new Claim(JwtRegisteredClaimNames.Nbf, DateTime.Now.ToUnixTimeSeconds().ToString()),//令牌生效时间
+                new Claim(JwtRegisteredClaimNames.Exp, DateTime.Now.AddMinutes(outTimeMinute).ToUnixTimeSeconds().ToString()),//令牌过期时间
                 new Claim(JwtRegisteredClaimNames.Iss,configuration["Authentication:JwtBearer:Issuer"]), // 签发者
                 new Claim(JwtRegisteredClaimNames.Aud,configuration["Authentication:JwtBearer:Audience"]) // 接收者
             };
