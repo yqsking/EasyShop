@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using EasyShop.CommonFramework.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
+using EasyShop.Appliction.ViewModels.User;
 
 namespace EasyShop.Api.Controllers
 {
@@ -20,15 +22,19 @@ namespace EasyShop.Api.Controllers
     {
         private readonly IUserQueries _userQueries;
         private readonly IConfiguration _configuration;
+        private readonly IDistributedCache _cache;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userQueries"></param>
         /// <param name="configuration"></param>
-        public AccountController(IUserQueries userQueries, IConfiguration configuration)
+        /// <param name="cache"></param>
+        public AccountController(IUserQueries userQueries, IConfiguration configuration,IDistributedCache cache)
         {
             _userQueries = userQueries;
             _configuration = configuration;
+            _cache = cache;
         }
 
         /// <summary>
@@ -50,6 +56,7 @@ namespace EasyShop.Api.Controllers
                         new Claim("UserType",result.Data.UserType),
                     };
                 string token = JwtHelper.GetToken(_configuration, userClaims);
+                await  new CacheHelper(_cache).SetObjectAsync(result.Data.Id,result.Data);
                 return Ok(new ApiResult<string>() { IsSuccess = true, Message = "登录成功！", Data = token });
             }
             else

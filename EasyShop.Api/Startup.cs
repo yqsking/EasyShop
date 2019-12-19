@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -123,6 +124,14 @@ namespace EasyShop.Api
             var sqlConnection = Configuration.GetConnectionString("Default");
             services.AddDbContext<EasyShopDBContext>(option => option.UseSqlServer(sqlConnection, provider0ptions => provider0ptions.CommandTimeout(120)));
 
+            //依赖注入redis
+            services.AddDistributedMemoryCache();
+            services.AddStackExchangeRedisCache(options=>
+            {
+                options.InstanceName = "EasyShopCache";
+                options.Configuration = Configuration["RedisCacheConnectionString"];
+            });
+
             //添加swagger
             services.AddSwaggerGen(options =>
             {
@@ -168,7 +177,7 @@ namespace EasyShop.Api
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
         /// <param name="app"></param>
-        /// <param name="env"></param>        
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -188,6 +197,7 @@ namespace EasyShop.Api
                     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), path)),
                     RequestPath = new PathString($"/{path}")
                 });
+
             //全局异常处理
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
 

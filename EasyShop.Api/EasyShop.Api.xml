@@ -9,12 +9,13 @@
             授权模块
             </summary>
         </member>
-        <member name="M:EasyShop.Api.Controllers.AccountController.#ctor(EasyShop.Appliction.Queries.IUserQueries,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:EasyShop.Api.Controllers.AccountController.#ctor(EasyShop.Appliction.Queries.IUserQueries,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
             <summary>
             
             </summary>
             <param name="userQueries"></param>
             <param name="configuration"></param>
+            <param name="cache"></param>
         </member>
         <member name="M:EasyShop.Api.Controllers.AccountController.GetTokenByPhone(EasyShop.Appliction.DataTransferModels.User.GetTokenByPhoneRequestDto)">
             <summary>
@@ -137,11 +138,13 @@
             授权方式（cookie, bearer, oauth, openid）
             </summary>
         </member>
-        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
             <summary>
             
             </summary>
             <param name="provider"></param>
+            <param name="configuration"></param>
+            <param name="cache"></param>
         </member>
         <member name="M:EasyShop.Api.JWT.Handlers.JwtAuthorizationRequirementHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,EasyShop.Api.JWT.Requirements.JwtAuthorizationRequirement)">
             <summary>
@@ -230,7 +233,7 @@
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>
             <param name="app"></param>
-            <param name="env"></param>        
+            <param name="env"></param>
         </member>
     </members>
 </doc>

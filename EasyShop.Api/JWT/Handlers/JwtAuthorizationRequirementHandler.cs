@@ -1,8 +1,10 @@
 ﻿using EasyShop.Api.JWT.Requirements;
+using EasyShop.Appliction.ViewModels.User;
 using EasyShop.CommonFramework.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
@@ -22,14 +24,19 @@ namespace EasyShop.Api.JWT.Handlers
 
         private readonly IConfiguration _configuration;
 
+        private readonly IDistributedCache _cache;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
-        public JwtAuthorizationRequirementHandler(IAuthenticationSchemeProvider provider,IConfiguration configuration)
+        /// <param name="configuration"></param>
+        /// <param name="cache"></param>
+        public JwtAuthorizationRequirementHandler(IAuthenticationSchemeProvider provider,IConfiguration configuration,IDistributedCache cache)
         {
             _provider = provider;
             _configuration = configuration;
+            _cache = cache;
         }
 
         /// <summary>
@@ -49,8 +56,8 @@ namespace EasyShop.Api.JWT.Handlers
                 var result = await httpContext.AuthenticateAsync(defaultAuthenticate.Name);
                 if (result.Succeeded)
                 {
-        
                     httpContext.User = result.Principal;
+                    UserResponseDto user= await  new CacheHelper(_cache).GetObjectAsync<UserResponseDto>(result.Principal.Claims.FirstOrDefault(item=>item.Type=="UserId").Value+1);
                     context.Succeed(requirement);
                     string newToken = JwtHelper.RefreshTokenExpTime(_configuration, result.Principal.Claims.ToList());
                     //Response返回最新jwt token
