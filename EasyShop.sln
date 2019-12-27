@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyShop.Dommain", "EasySho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyShop.Appliction", "EasyShop.Appliction\EasyShop.Appliction.csproj", "{15834ED3-A9F1-49FD-8179-D4E04835190B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyShop.Api", "EasyShop.Api\EasyShop.Api.csproj", "{56C52974-1276-4022-BC27-EBF0F1507035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyShop.Api", "EasyShop.Api\EasyShop.Api.csproj", "{56C52974-1276-4022-BC27-EBF0F1507035}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyShop.DI", "EasyShop.DI\EasyShop.DI.csproj", "{3BD75B5B-1794-480C-A779-E26C9A83AA16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyShop.DI", "EasyShop.DI\EasyShop.DI.csproj", "{3BD75B5B-1794-480C-A779-E26C9A83AA16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyShop.Job", "EasyShop.Job\EasyShop.Job.csproj", "{1B0FAE5B-C8D5-4E71-9200-85311A09D563}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{3BD75B5B-1794-480C-A779-E26C9A83AA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BD75B5B-1794-480C-A779-E26C9A83AA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BD75B5B-1794-480C-A779-E26C9A83AA16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0FAE5B-C8D5-4E71-9200-85311A09D563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0FAE5B-C8D5-4E71-9200-85311A09D563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0FAE5B-C8D5-4E71-9200-85311A09D563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0FAE5B-C8D5-4E71-9200-85311A09D563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{15834ED3-A9F1-49FD-8179-D4E04835190B} = {0E026C11-90E8-493A-8E32-062BD87770ED}
 		{56C52974-1276-4022-BC27-EBF0F1507035} = {BA8F45BB-CE8B-431A-B532-042ACEC24C18}
 		{3BD75B5B-1794-480C-A779-E26C9A83AA16} = {BA8F45BB-CE8B-431A-B532-042ACEC24C18}
+		{1B0FAE5B-C8D5-4E71-9200-85311A09D563} = {BA8F45BB-CE8B-431A-B532-042ACEC24C18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE77BCEC-54CF-4FB7-A857-D6BC4809AA24}
