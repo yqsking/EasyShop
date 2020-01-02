@@ -47,8 +47,8 @@ namespace EasyShop.Job
 
             app.UseHangfireServer();//启动HangFire服务
             app.UseHangfireDashboard();//启动HangFire图形界面
-            RecurringJob.AddOrUpdate(()=> System.Console.WriteLine("22333"),Cron.Minutely());
 
+           
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
