@@ -5,7 +5,7 @@ namespace EasyShop.CommonFramework.Const
     /// <summary>
     /// 用户类型常量
     /// </summary>
-    public static  class UserTypeConst
+    public   class UserTypeConst
     {
         /// <summary>
         /// 管理员

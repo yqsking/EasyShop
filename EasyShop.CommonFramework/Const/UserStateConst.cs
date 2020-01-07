@@ -5,7 +5,7 @@ namespace EasyShop.CommonFramework.Const
     /// <summary>
     /// 用户状态常量
     /// </summary>
-    public static  class UserStateConst
+    public   class UserStateConst
     {
         /// <summary>
         /// 正常

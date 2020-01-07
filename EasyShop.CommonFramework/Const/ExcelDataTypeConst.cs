@@ -3,7 +3,7 @@
     /// <summary>
     /// 导出字段类型常量
     /// </summary>
-    public static  class ExcelDataTypeConst
+    public   class ExcelDataTypeConst
     {
         /// <summary>
         /// 文本

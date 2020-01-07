@@ -14,15 +14,15 @@ namespace EasyShop.CommonFramework.Helpers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static List<KeyValuePair<string, string>> GetAllDescription<T>() where T:new()
+        public static Dictionary<string,string> GetAllDescription<T>() where T:new()
         {
-            List<KeyValuePair<string, string>> result = new List<KeyValuePair<string, string>>();
+            Dictionary<string, string> dic = new Dictionary<string, string>();
             foreach (var item in typeof(T).GetFields())
             {
                 string value = item.GetCustomAttribute<DescriptionAttribute>()?.Description;
-                result.Add(new KeyValuePair<string, string>(item.GetValue(null).ToString(),value));
+                dic.Add(item.GetValue(null).ToString(),value);
             }
-            return result;
+            return dic;
         }
     }
 }

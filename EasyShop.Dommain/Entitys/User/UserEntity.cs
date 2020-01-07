@@ -1,5 +1,6 @@
 ﻿using EasyShop.CommonFramework.Const;
 using EasyShop.CommonFramework.Exception;
+using EasyShop.CommonFramework.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -153,9 +154,10 @@ namespace EasyShop.Dommain.Entitys.User
         /// <param name="userType"></param>
         public void SetUserType(string userType)
         {
-            if(UserType==UserTypeConst.Manage)
+            string root = ConstHelper.GetAllDescription<UserTypeConst>()[UserTypeConst.Manage];
+            if (UserType == UserTypeConst.Manage)
             {
-                throw new  CustomException("");
+                throw new CustomException($"{root}不能更改用户状态！");
             }
             UserType = userType;
         }
@@ -172,9 +174,10 @@ namespace EasyShop.Dommain.Entitys.User
         /// <param name="userState"></param>
         public void SetUserState(string userState)
         {
+            string root= ConstHelper.GetAllDescription<UserTypeConst>()[UserTypeConst.Manage];
             if(UserType==UserTypeConst.Manage)
             {
-                throw new CustomException("");
+                throw new CustomException($"{root}不能更改用户状态！");
             }
             UserState = userState;
         }
