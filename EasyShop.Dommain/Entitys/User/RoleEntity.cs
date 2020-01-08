@@ -6,7 +6,7 @@ namespace EasyShop.Dommain.Entitys.User
     /// <summary>
     /// 角色信息
     /// </summary>
-    [Table("t_User_Role")]
+    [Table("t_user_role")]
     public  class RoleEntity:BaseEntity
     {
         /// <summary>

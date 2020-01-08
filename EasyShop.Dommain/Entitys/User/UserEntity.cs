@@ -9,7 +9,7 @@ namespace EasyShop.Dommain.Entitys.User
     /// <summary>
     /// 用户基础信息
     /// </summary>
-    [Table("t_User_User")]
+    [Table("t_user_user")]
     public  class UserEntity:BaseEntity
     {
 

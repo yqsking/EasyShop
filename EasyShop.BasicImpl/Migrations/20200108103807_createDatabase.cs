@@ -63,7 +63,9 @@ namespace EasyShop.BasicImpl.Migrations
                     Photo = table.Column<string>(maxLength: 200, nullable: true),
                     QQNumber = table.Column<string>(maxLength: 50, nullable: true),
                     WeCharNumber = table.Column<string>(maxLength: 50, nullable: true),
-                    Email = table.Column<string>(maxLength: 50, nullable: true)
+                    Email = table.Column<string>(maxLength: 50, nullable: true),
+                    UserType = table.Column<string>(maxLength: 50, nullable: false),
+                    UserState = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

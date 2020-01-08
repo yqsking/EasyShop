@@ -183,11 +183,6 @@
             处理异常信息
             </summary>
         </member>
-        <member name="T:EasyShop.Api.MiddleWare.JwtCustomerAuthorizeMiddleware">
-            <summary>
-            JWT授权中间件
-            </summary>
-        </member>
         <member name="T:EasyShop.Api.Program">
             <summary>
             

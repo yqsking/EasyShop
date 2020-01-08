@@ -120,7 +120,7 @@ namespace EasyShop.Api
 
             //依赖注入数据库上下文对象
             var sqlConnection = Configuration.GetConnectionString("Default");
-            services.AddDbContext<EasyShopDBContext>(option => option.UseSqlServer(sqlConnection, provider0ptions => provider0ptions.CommandTimeout(120)));
+            services.AddDbContext<EasyShopDBContext>(option => option.UseMySql(sqlConnection, provider0ptions => provider0ptions.CommandTimeout(120)));
 
             //依赖注入redis
             services.AddDistributedMemoryCache();

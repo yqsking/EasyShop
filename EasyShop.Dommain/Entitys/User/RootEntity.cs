@@ -6,7 +6,7 @@ namespace EasyShop.Dommain.Entitys.User
     /// <summary>
     /// 权限信息
     /// </summary>
-    [Table("t_Table_Root")]
+    [Table("t_table_root")]
     public  class RootEntity:BaseEntity
     {
         /// <summary>
